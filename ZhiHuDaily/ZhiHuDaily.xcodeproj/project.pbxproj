@@ -37,6 +37,7 @@
 		7447DB091E7BA40A009C2349 /* LaunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB081E7BA40A009C2349 /* LaunchModel.swift */; };
 		7447DB0C1E7BB4F2009C2349 /* LaunchBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB0B1E7BB4F2009C2349 /* LaunchBottomView.swift */; };
 		7447DB0E1E7BC9B8009C2349 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB0D1E7BC9B8009C2349 /* DataUtils.swift */; };
+		7447DB111E7BDC3D009C2349 /* MainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */; };
 		A83FDFEA71F232F59A8A11C0 /* Pods_ZhiHuDaily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F102AAB7850854AB052F403 /* Pods_ZhiHuDaily.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		7447DB081E7BA40A009C2349 /* LaunchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchModel.swift; sourceTree = "<group>"; };
 		7447DB0B1E7BB4F2009C2349 /* LaunchBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchBottomView.swift; sourceTree = "<group>"; };
 		7447DB0D1E7BC9B8009C2349 /* DataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
+		7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationBar.swift; sourceTree = "<group>"; };
 		FAE7D28D4F49BC8619BA43D8 /* Pods-ZhiHuDaily.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZhiHuDaily.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZhiHuDaily/Pods-ZhiHuDaily.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -197,6 +199,7 @@
 		7447DA8C1E7B798A009C2349 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7447DB0F1E7BDC22009C2349 /* Main */,
 				7447DB0A1E7BB331009C2349 /* LaunchPage */,
 			);
 			path = Views;
@@ -331,6 +334,14 @@
 			path = LaunchPage;
 			sourceTree = "<group>";
 		};
+		7447DB0F1E7BDC22009C2349 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -455,6 +466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7447DB111E7BDC3D009C2349 /* MainNavigationBar.swift in Sources */,
 				7447DAD01E7B877F009C2349 /* WebColorDefine.swift in Sources */,
 				7447DAF41E7B878A009C2349 /* GCDMulticastDelegate.m in Sources */,
 				7447DAF11E7B878A009C2349 /* UIImage+ImageEffects.m in Sources */,

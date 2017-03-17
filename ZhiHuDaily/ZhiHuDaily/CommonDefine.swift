@@ -43,7 +43,7 @@ func kRGBA(_ r:CGFloat, g:CGFloat, b:CGFloat, a:CGFloat) -> UIColor {
 
 let kMenuBackgroundColor = UIColor(red:0.14, green:0.16, blue:0.19, alpha:1)
 let kLaunchBackgroundColor = kRGBA(20, g: 20, b: 20, a: 1)
-
+let kMainNavigationBarColor = UIColor(red:0.02, green:0.6, blue:0.85, alpha:1)
 
 
 
