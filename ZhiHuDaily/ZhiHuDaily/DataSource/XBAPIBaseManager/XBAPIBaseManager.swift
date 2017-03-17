@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -115,7 +116,7 @@ open class XBAPIBaseManager: NSObject {
         if self is ManagerProtocol {
             self.apiManager = self as? ManagerProtocol
             if let apiManager = apiManager {
-                requestUrlString = apiManager.baseUrl + apiManager.path
+                requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
             }
         } else {
             fatalError("child class must confirm ManagerProtocol!")

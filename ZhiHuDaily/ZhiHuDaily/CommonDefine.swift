@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
 //MARK: - 基本属性
 let kScreenBounds = UIScreen.main.bounds
 
@@ -40,3 +42,8 @@ func kRGBA(_ r:CGFloat, g:CGFloat, b:CGFloat, a:CGFloat) -> UIColor {
 //MARK: - Color
 
 let kMenuBackgroundColor = UIColor(red:0.14, green:0.16, blue:0.19, alpha:1)
+let kLaunchBackgroundColor = kRGBA(20, g: 20, b: 20, a: 1)
+
+
+
+

@@ -15,6 +15,8 @@ public enum RequestType: String {
 public protocol ManagerProtocol: NSObjectProtocol {
     /// 比如https://itunes.apple.com部分
     var baseUrl: String {get}
+    /// api版本
+    var apiVersion: String {get}
     /// 比如/look部分
     var path: String {get}
     /// 请求的参数
@@ -36,7 +38,8 @@ public protocol ManagerProtocol: NSObjectProtocol {
 
 //默认实现
 public extension ManagerProtocol {
-    var baseUrl: String {return ""} //对于具体的APP而言，这个值一般是固定的
+    var baseUrl: String {return "http://news-at.zhihu.com/api/"} //对于具体的APP而言，这个值一般是固定的
+    var apiVersion: String {return "4"} //api版本
     var parameters: [String: AnyObject]? {return nil} //参数可有可无
     var requestType: RequestType {return .get} //默认是GET请求方式
     var isJsonData: Bool {return true} //默认是json数据
