@@ -1,6 +1,6 @@
 //
 //  XBUtils.h
-//  Lkong
+//
 //
 //  Created by xiabob on 16/10/11.
 //  Copyright © 2016年 xiabob. All rights reserved.

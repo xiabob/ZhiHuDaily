@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16911C291E7C0E2A002F5A69 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16911C281E7C0E2A002F5A69 /* News.swift */; };
+		16E2B51E1E7D0405001CE63B /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B51D1E7D0405001CE63B /* NewsModel.swift */; };
+		16E2B5201E7D0D84001CE63B /* GetLatestNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B51F1E7D0D84001CE63B /* GetLatestNews.swift */; };
+		16E2B5291E7D13F1001CE63B /* NSTimer+AutoRelease.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B5241E7D13F1001CE63B /* NSTimer+AutoRelease.swift */; };
+		16E2B52A1E7D13F1001CE63B /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B5251E7D13F1001CE63B /* String+MD5.swift */; };
+		16E2B52B1E7D13F1001CE63B /* XBCycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B5261E7D13F1001CE63B /* XBCycleView.swift */; };
+		16E2B52C1E7D13F1001CE63B /* XBCycleViewImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B5271E7D13F1001CE63B /* XBCycleViewImageModel.swift */; };
+		16E2B52D1E7D13F1001CE63B /* XBImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B5281E7D13F1001CE63B /* XBImageDownloader.swift */; };
+		16EFFB9E1E7E340D00457A12 /* CycleRefreshHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFFB9D1E7E340D00457A12 /* CycleRefreshHeaderView.swift */; };
+		16EFFBA11E7E3DDF00457A12 /* UIView+XBAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 16EFFBA01E7E3DDF00457A12 /* UIView+XBAdd.m */; };
 		7447DA771E7B7754009C2349 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DA761E7B7754009C2349 /* AppDelegate.swift */; };
 		7447DA7C1E7B7754009C2349 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7447DA7A1E7B7754009C2349 /* Main.storyboard */; };
 		7447DA7E1E7B7754009C2349 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7447DA7D1E7B7754009C2349 /* Assets.xcassets */; };
@@ -43,6 +53,19 @@
 
 /* Begin PBXFileReference section */
 		150D8701880D2B14E83D1E13 /* Pods-ZhiHuDaily.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZhiHuDaily.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZhiHuDaily/Pods-ZhiHuDaily.debug.xcconfig"; sourceTree = "<group>"; };
+		16911C281E7C0E2A002F5A69 /* News.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		16E2B51D1E7D0405001CE63B /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		16E2B51F1E7D0D84001CE63B /* GetLatestNews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLatestNews.swift; sourceTree = "<group>"; };
+		16E2B5211E7D10F3001CE63B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		16E2B5221E7D10F3001CE63B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		16E2B5241E7D13F1001CE63B /* NSTimer+AutoRelease.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTimer+AutoRelease.swift"; sourceTree = "<group>"; };
+		16E2B5251E7D13F1001CE63B /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
+		16E2B5261E7D13F1001CE63B /* XBCycleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBCycleView.swift; sourceTree = "<group>"; };
+		16E2B5271E7D13F1001CE63B /* XBCycleViewImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBCycleViewImageModel.swift; sourceTree = "<group>"; };
+		16E2B5281E7D13F1001CE63B /* XBImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBImageDownloader.swift; sourceTree = "<group>"; };
+		16EFFB9D1E7E340D00457A12 /* CycleRefreshHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CycleRefreshHeaderView.swift; sourceTree = "<group>"; };
+		16EFFB9F1E7E3DDF00457A12 /* UIView+XBAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XBAdd.h"; sourceTree = "<group>"; };
+		16EFFBA01E7E3DDF00457A12 /* UIView+XBAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XBAdd.m"; sourceTree = "<group>"; };
 		1F102AAB7850854AB052F403 /* Pods_ZhiHuDaily.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZhiHuDaily.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7447DA731E7B7754009C2349 /* ZhiHuDaily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZhiHuDaily.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7447DA761E7B7754009C2349 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +127,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16911C271E7C0A8B002F5A69 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				16911C281E7C0E2A002F5A69 /* News.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		16E2B5231E7D13F1001CE63B /* XBCycleView */ = {
+			isa = PBXGroup;
+			children = (
+				16E2B5241E7D13F1001CE63B /* NSTimer+AutoRelease.swift */,
+				16E2B5251E7D13F1001CE63B /* String+MD5.swift */,
+				16E2B5261E7D13F1001CE63B /* XBCycleView.swift */,
+				16E2B5271E7D13F1001CE63B /* XBCycleViewImageModel.swift */,
+				16E2B5281E7D13F1001CE63B /* XBImageDownloader.swift */,
+			);
+			path = XBCycleView;
+			sourceTree = "<group>";
+		};
+		16EFFB9C1E7E307100457A12 /* CommonViews */ = {
+			isa = PBXGroup;
+			children = (
+				16EFFB9D1E7E340D00457A12 /* CycleRefreshHeaderView.swift */,
+			);
+			path = CommonViews;
+			sourceTree = "<group>";
+		};
 		485F014AE9465B436B5A3A4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +224,7 @@
 		7447DA891E7B798A009C2349 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				16E2B5231E7D13F1001CE63B /* XBCycleView */,
 				7447DAD11E7B878A009C2349 /* XBUtils */,
 				7447DACC1E7B877F009C2349 /* WebColor */,
 				7447DA8F1E7B863F009C2349 /* XBCornerRadius */,
@@ -183,7 +235,9 @@
 		7447DA8A1E7B798A009C2349 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				16911C271E7C0A8B002F5A69 /* Entities */,
 				7447DB081E7BA40A009C2349 /* LaunchModel.swift */,
+				16E2B51D1E7D0405001CE63B /* NewsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -199,6 +253,7 @@
 		7447DA8C1E7B798A009C2349 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				16EFFB9C1E7E307100457A12 /* CommonViews */,
 				7447DB0F1E7BDC22009C2349 /* Main */,
 				7447DB0A1E7BB331009C2349 /* LaunchPage */,
 			);
@@ -218,6 +273,7 @@
 			children = (
 				7447DAC31E7B876E009C2349 /* XBAPIBaseManager */,
 				7447DB061E7B9265009C2349 /* LaunchDS.swift */,
+				16E2B51F1E7D0D84001CE63B /* GetLatestNews.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -275,6 +331,8 @@
 		7447DAD81E7B878A009C2349 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				16EFFB9F1E7E3DDF00457A12 /* UIView+XBAdd.h */,
+				16EFFBA01E7E3DDF00457A12 /* UIView+XBAdd.m */,
 				7447DAD91E7B878A009C2349 /* UIButton+XBPosition.h */,
 				7447DADA1E7B878A009C2349 /* UIButton+XBPosition.m */,
 				7447DADB1E7B878A009C2349 /* UIImage+ImageEffects.h */,
@@ -466,11 +524,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16EFFB9E1E7E340D00457A12 /* CycleRefreshHeaderView.swift in Sources */,
+				16E2B5201E7D0D84001CE63B /* GetLatestNews.swift in Sources */,
+				16EFFBA11E7E3DDF00457A12 /* UIView+XBAdd.m in Sources */,
 				7447DB111E7BDC3D009C2349 /* MainNavigationBar.swift in Sources */,
 				7447DAD01E7B877F009C2349 /* WebColorDefine.swift in Sources */,
 				7447DAF41E7B878A009C2349 /* GCDMulticastDelegate.m in Sources */,
 				7447DAF11E7B878A009C2349 /* UIImage+ImageEffects.m in Sources */,
 				7447DACF1E7B877F009C2349 /* String+WebColor.swift in Sources */,
+				16E2B52D1E7D13F1001CE63B /* XBImageDownloader.swift in Sources */,
 				7447DA771E7B7754009C2349 /* AppDelegate.swift in Sources */,
 				7447DA941E7B863F009C2349 /* XBCornerRadius.swift in Sources */,
 				7447DA8E1E7B83AE009C2349 /* CommonDefine.swift in Sources */,
@@ -478,6 +540,7 @@
 				7447DACA1E7B876E009C2349 /* XBAPIBaseManager.swift in Sources */,
 				7447DAEF1E7B878A009C2349 /* NSURL+ParameterParser.m in Sources */,
 				7447DAF21E7B878A009C2349 /* NSString+XBAppVersion.m in Sources */,
+				16E2B52C1E7D13F1001CE63B /* XBCycleViewImageModel.swift in Sources */,
 				7447DAFF1E7B8A63009C2349 /* MainNavigationController.swift in Sources */,
 				7447DB071E7B9265009C2349 /* LaunchDS.swift in Sources */,
 				7447DAF31E7B878A009C2349 /* XBAppVersion.m in Sources */,
@@ -486,10 +549,15 @@
 				7447DB051E7B8F28009C2349 /* MenuVC.swift in Sources */,
 				7447DACB1E7B876E009C2349 /* XBAPIChain.swift in Sources */,
 				7447DB031E7B8F19009C2349 /* LaunchVC.swift in Sources */,
+				16E2B52B1E7D13F1001CE63B /* XBCycleView.swift in Sources */,
 				7447DAF01E7B878A009C2349 /* UIButton+XBPosition.m in Sources */,
+				16911C291E7C0E2A002F5A69 /* News.swift in Sources */,
 				7447DAC91E7B876E009C2349 /* ManagerProtocol.swift in Sources */,
+				16E2B52A1E7D13F1001CE63B /* String+MD5.swift in Sources */,
 				7447DAC81E7B876E009C2349 /* Error.swift in Sources */,
+				16E2B51E1E7D0405001CE63B /* NewsModel.swift in Sources */,
 				7447DAF61E7B878A009C2349 /* XBJsonKit.m in Sources */,
+				16E2B5291E7D13F1001CE63B /* NSTimer+AutoRelease.swift in Sources */,
 				7447DAEE1E7B878A009C2349 /* NSNull+Safe.m in Sources */,
 				7447DAF51E7B878A009C2349 /* XBFileHash.m in Sources */,
 				7447DB0C1E7BB4F2009C2349 /* LaunchBottomView.swift in Sources */,
@@ -504,6 +572,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7447DA7B1E7B7754009C2349 /* Base */,
+				16E2B5211E7D10F3001CE63B /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -512,6 +581,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7447DA801E7B7754009C2349 /* Base */,
+				16E2B5221E7D10F3001CE63B /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -523,6 +593,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -572,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -621,6 +693,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiabob.ZhiHuDaily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xia/Documents/ios code/git/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -636,6 +709,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiabob.ZhiHuDaily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xia/Documents/ios code/git/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

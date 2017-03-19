@@ -24,14 +24,26 @@ class MainNavigationBar: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = UIColor.white
         label.text = "今日热闻"
+        label.sizeToFit()
         return label
+    }()
+    
+    fileprivate lazy var cycleRefreshHeader: CycleRefreshHeaderView = {
+        let header:CycleRefreshHeaderView = CycleRefreshHeaderView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
+        header.refreshBlock = {
+            dispatchMain(after: 2, completeBlock: { 
+                header.stopAnimation()
+            })
+        }
+        return header
     }()
     
     //MARK: - init
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, scrollView: UIScrollView) {
         super.init(frame: frame)
         backgroundColor = kMainNavigationBarColor
+        cycleRefreshHeader.scrollView = scrollView
         
         configViews()
     }
@@ -45,6 +57,7 @@ class MainNavigationBar: UIView {
     fileprivate func configViews() {
         addSubview(menuButton)
         addSubview(titleLabel)
+        addSubview(cycleRefreshHeader)
     }
     
     override func layoutSubviews() {
@@ -55,6 +68,12 @@ class MainNavigationBar: UIView {
         
         titleLabel.snp.makeConstraints { (make) in
             make.center.equalTo(self).offset(10)
+        }
+        
+        cycleRefreshHeader.snp.makeConstraints { (make) in
+            make.right.equalTo(titleLabel.snp.left).offset(-6)
+            make.centerY.equalTo(titleLabel)
+            make.size.equalTo(cycleRefreshHeader.xb_size)
         }
     }
     
