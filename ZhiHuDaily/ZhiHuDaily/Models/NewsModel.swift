@@ -19,11 +19,14 @@ enum NewsShowType: Int {
 
 class NewsModel: NSObject {
     
+    //MARK: - base
+    
     ///消息id
     var newsID = 0
     var title = ""
     var imageUrl = ""
     var type = 0
+    var rawDate = ""
     ///消息对应的日期，格式“03月17日 星期五”
     var date = ""
     ///消息内容是否包含多张图
@@ -31,6 +34,11 @@ class NewsModel: NSObject {
     ///消息是否被点击过
     var isRead = false
     var showType = NewsShowType.normal
+    
+    
+    //MARK: - layout
+    
+    var newsCellHeight: CGFloat = 90
 
     init(from news: News) {
         super.init()
@@ -42,6 +50,7 @@ class NewsModel: NSObject {
         title  = news.title
         imageUrl = news.imageUrl
         type     = news.type
+        rawDate  = news.date
         date     = getProcessedDate(dateString: news.date)
         isMultipic = news.isMultipic
         isRead = news.isRead

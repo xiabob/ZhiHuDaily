@@ -13,7 +13,7 @@ class MenuVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        commonInit()
     }
     
     fileprivate func commonInit() {

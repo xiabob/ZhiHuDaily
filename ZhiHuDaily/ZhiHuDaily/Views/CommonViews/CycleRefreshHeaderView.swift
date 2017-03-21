@@ -14,6 +14,7 @@ class CycleRefreshHeaderView: UIView {
     fileprivate let kContentOffsetKeyPath = "contentOffset"
     
     var maxScrollOffset: CGFloat = 60
+    var miniRefreshDuration: TimeInterval = 2
     var refreshBlock: (()->())?
     private(set) var currentContentOffset: CGFloat = 0
     private(set) var isAnimationing = false
@@ -25,12 +26,13 @@ class CycleRefreshHeaderView: UIView {
             }
         }
     }
+    fileprivate var beginDate = Date()
 
     
     fileprivate lazy var backgroundCycleView: UIView = {
         let view = UIView(frame: self.bounds)
         view.backgroundColor = UIColor.clear
-        view.layer.borderColor = UIColor.black.withAlphaComponent(0.4).cgColor
+        view.layer.borderColor = UIColor.black.withAlphaComponent(0.25).cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = self.xb_width/2
         view.layer.masksToBounds = true
@@ -39,12 +41,16 @@ class CycleRefreshHeaderView: UIView {
     
     fileprivate lazy var cycleLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
-        let path = UIBezierPath(arcCenter: CGPoint(x: self.xb_width/2, y: self.xb_height/2), radius: self.xb_width/2, startAngle: CGFloat(M_PI_2), endAngle: CGFloat(M_PI*2 + M_PI_2), clockwise: true)
+        let path = UIBezierPath(arcCenter: CGPoint(x: self.xb_width/2, y: self.xb_height/2), radius: self.xb_width/2-0.5, startAngle: CGFloat(M_PI_2), endAngle: CGFloat(M_PI*2 + M_PI_2), clockwise: true)
         layer.path = path.cgPath
         layer.lineWidth = 1
         layer.lineCap = kCALineCapRound
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = UIColor.white.cgColor
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: -1, height: 1)
+        layer.shadowRadius = 1
         layer.strokeEnd = 0
         return layer
     }()
@@ -111,7 +117,7 @@ class CycleRefreshHeaderView: UIView {
                 let isDragging = scrollView?.isDragging ?? false
                 if !isDragging && currentContentOffset <= -maxScrollOffset {
                     isAnimationing = true
-                    startAnimation()
+                    beginRefreshing()
                 } else {
                     isAnimationing = false
                 }
@@ -124,7 +130,8 @@ class CycleRefreshHeaderView: UIView {
     
     //MARK: - animation
     
-    func startAnimation() {
+    func beginRefreshing() {
+        beginDate = Date()
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         cycleLayer.strokeEnd = 0
@@ -135,9 +142,19 @@ class CycleRefreshHeaderView: UIView {
         refreshBlock?()
     }
     
-    func stopAnimation() {
-        isAnimationing = false
-        indicatorView.alpha = 0
-        indicatorView.stopAnimating()
+    func endRefreshing() {
+        let endDate = Date()
+        let offset = miniRefreshDuration - endDate.timeIntervalSince(beginDate)
+        if offset > 0 {
+            dispatchMain(after: offset, completeBlock: { [weak self] in
+                self?.indicatorView.alpha = 0
+                self?.indicatorView.stopAnimating()
+                self?.isAnimationing = false
+            })
+        } else {
+            indicatorView.alpha = 0
+            indicatorView.stopAnimating()
+            isAnimationing = false
+        }
     }
 }

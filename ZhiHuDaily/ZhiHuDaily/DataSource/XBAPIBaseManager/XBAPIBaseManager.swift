@@ -115,9 +115,6 @@ open class XBAPIBaseManager: NSObject {
         
         if self is ManagerProtocol {
             self.apiManager = self as? ManagerProtocol
-            if let apiManager = apiManager {
-                requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
-            }
         } else {
             fatalError("child class must confirm ManagerProtocol!")
         }
@@ -135,6 +132,9 @@ open class XBAPIBaseManager: NSObject {
     //MARK: - load data
     
     open func loadData() {
+        if let apiManager = apiManager {
+            requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
+        }
         executeHttpRequest()
     }
     
@@ -145,6 +145,8 @@ open class XBAPIBaseManager: NSObject {
     
     open func loadDataFromLocal() {
         guard let apiManager = apiManager else {return}
+        requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
+        
         if apiManager.shouldCache {
             guard let data = getDataFromLocal() else {return callOnManagerCallApiSuccess()} //只是没有数据
             handleRespnseData(data)

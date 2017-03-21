@@ -21,6 +21,14 @@ open class XBCyclePageView: UIView {
         return view
     }()
     
+    fileprivate lazy var maskImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.image = #imageLiteral(resourceName: "Home_Image_Mask")
+        return view
+    }()
+    
     fileprivate lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -40,6 +48,7 @@ open class XBCyclePageView: UIView {
         super.init(frame: frame)
         
         addSubview(imageView)
+        addSubview(maskImageView)
         addSubview(titleLabel)
     }
     
@@ -53,9 +62,13 @@ open class XBCyclePageView: UIView {
             make.left.right.top.bottom.equalTo(self)
         }
         
+        maskImageView.snp.makeConstraints { (make) in
+            make.left.right.top.bottom.equalTo(self)
+        }
+        
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
-            make.bottom.equalTo(self).offset(-34)
+            make.bottom.equalTo(self).offset(-30)
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }
@@ -75,10 +88,37 @@ open class XBCycleView: UIView, UIScrollViewDelegate {
     fileprivate var nextIndex: Int = 0
     
     //subviews
-    fileprivate lazy var scrollView: UIScrollView = self.configScrollView()
-    fileprivate lazy var currentImageView: XBCyclePageView = self.configImageView()
-    fileprivate lazy var nextImageView: XBCyclePageView = self.configImageView()
-    fileprivate lazy var pageControl: UIPageControl = self.configPageControl()
+    fileprivate lazy var scrollView: UIScrollView = {
+        let rect = CGRect(x: 0, y: 0, width: self.width, height: self.height)
+        let view: UIScrollView = UIScrollView(frame: rect)
+        view.contentSize = CGSize(width: self.width*3, height: 0)
+        view.contentOffset = CGPoint(x: self.width, y: 0)
+        view.isPagingEnabled = true
+        //bounces为true时，用力快速滑动时，scrollView的contentOffset有偏差。
+        view.bounces = false
+        view.alwaysBounceHorizontal = false
+        view.alwaysBounceVertical = false
+        view.showsHorizontalScrollIndicator = false
+        view.scrollsToTop = false
+        view.backgroundColor = UIColor.white
+        view.delegate = self
+        
+        return view
+    }()
+    fileprivate lazy var currentImageView: XBCyclePageView = {
+        let imageView = XBCyclePageView(frame: CGRect(x: self.width, y: 0, width: self.width, height: self.height))
+        return imageView
+    }()
+    fileprivate lazy var nextImageView: XBCyclePageView = {
+        let imageView = XBCyclePageView(frame: CGRect(x: self.width*2, y: 0, width: self.width, height: self.height))
+        return imageView
+    }()
+    fileprivate lazy var pageControl: UIPageControl = {
+        let pageControl: UIPageControl = UIPageControl()
+        pageControl.currentPage = self.currentIndex
+        pageControl.hidesForSinglePage = true
+        return pageControl
+    }()
     fileprivate lazy var tapGesture: UITapGestureRecognizer = { [unowned self] in
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(tapImageView))
@@ -119,9 +159,7 @@ open class XBCycleView: UIView, UIScrollViewDelegate {
     open var imageModelArray = [XBCycleViewImageModel]() {
         didSet {
             updateCycleView()
-            if imageModelArray.count > 0 {
-                isAutoCycle = true
-            }
+            isAutoCycle = imageModelArray.count > 0
         }
     }
     ///是否是自动循环轮播，默认为true
@@ -238,35 +276,6 @@ open class XBCycleView: UIView, UIScrollViewDelegate {
         addSubview(pageControl)
         
         scrollView.addGestureRecognizer(tapGesture)
-    }
-    
-    fileprivate func configScrollView() -> UIScrollView {
-        let rect = CGRect(x: 0, y: 0, width: width, height: height)
-        let view: UIScrollView = UIScrollView(frame: rect)
-        view.contentSize = CGSize(width: width*3, height: 0)
-        view.contentOffset = CGPoint(x: width, y: 0)
-        view.isPagingEnabled = true
-        //bounces为true时，用力快速滑动时，scrollView的contentOffset有偏差。
-        view.bounces = false
-        view.alwaysBounceHorizontal = false
-        view.alwaysBounceVertical = false
-        view.showsHorizontalScrollIndicator = false
-        view.backgroundColor = UIColor.white
-        view.delegate = self
-        
-        return view;
-    }
-    
-    fileprivate func configImageView() -> XBCyclePageView {
-        let imageView = XBCyclePageView(frame: CGRect(x: width, y: 0, width: width, height: height))
-        return imageView
-    }
-    
-    fileprivate func configPageControl() -> UIPageControl {
-        let pageControl: UIPageControl = UIPageControl()
-        pageControl.currentPage = currentIndex
-        pageControl.hidesForSinglePage = true
-        return pageControl
     }
     
     //MARK: - set layout

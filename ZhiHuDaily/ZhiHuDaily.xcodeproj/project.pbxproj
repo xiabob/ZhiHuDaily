@@ -48,6 +48,8 @@
 		7447DB0C1E7BB4F2009C2349 /* LaunchBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB0B1E7BB4F2009C2349 /* LaunchBottomView.swift */; };
 		7447DB0E1E7BC9B8009C2349 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB0D1E7BC9B8009C2349 /* DataUtils.swift */; };
 		7447DB111E7BDC3D009C2349 /* MainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */; };
+		74785BA41E80CCF200BAAC35 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74785BA31E80CCF200BAAC35 /* NewsCell.swift */; };
+		74785BA61E81084800BAAC35 /* GetBeforeNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74785BA51E81084800BAAC35 /* GetBeforeNews.swift */; };
 		A83FDFEA71F232F59A8A11C0 /* Pods_ZhiHuDaily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F102AAB7850854AB052F403 /* Pods_ZhiHuDaily.framework */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +114,8 @@
 		7447DB0B1E7BB4F2009C2349 /* LaunchBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchBottomView.swift; sourceTree = "<group>"; };
 		7447DB0D1E7BC9B8009C2349 /* DataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
 		7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationBar.swift; sourceTree = "<group>"; };
+		74785BA31E80CCF200BAAC35 /* NewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		74785BA51E81084800BAAC35 /* GetBeforeNews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBeforeNews.swift; sourceTree = "<group>"; };
 		FAE7D28D4F49BC8619BA43D8 /* Pods-ZhiHuDaily.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZhiHuDaily.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZhiHuDaily/Pods-ZhiHuDaily.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				16EFFB9D1E7E340D00457A12 /* CycleRefreshHeaderView.swift */,
+				74785BA31E80CCF200BAAC35 /* NewsCell.swift */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				7447DAC31E7B876E009C2349 /* XBAPIBaseManager */,
 				7447DB061E7B9265009C2349 /* LaunchDS.swift */,
 				16E2B51F1E7D0D84001CE63B /* GetLatestNews.swift */,
+				74785BA51E81084800BAAC35 /* GetBeforeNews.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -561,6 +567,8 @@
 				7447DAEE1E7B878A009C2349 /* NSNull+Safe.m in Sources */,
 				7447DAF51E7B878A009C2349 /* XBFileHash.m in Sources */,
 				7447DB0C1E7BB4F2009C2349 /* LaunchBottomView.swift in Sources */,
+				74785BA41E80CCF200BAAC35 /* NewsCell.swift in Sources */,
+				74785BA61E81084800BAAC35 /* GetBeforeNews.swift in Sources */,
 				7447DB091E7BA40A009C2349 /* LaunchModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -693,7 +701,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiabob.ZhiHuDaily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xia/Documents/ios code/git/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/ZhiHuDaily/ZhiHuDaily-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -709,7 +717,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiabob.ZhiHuDaily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xia/Documents/ios code/git/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily/ZhiHuDaily-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/ZhiHuDaily/ZhiHuDaily-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
