@@ -50,14 +50,15 @@ open class XBCyclePageView: UIView {
         addSubview(imageView)
         addSubview(maskImageView)
         addSubview(titleLabel)
+        
+        setLayout()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func layoutSubviews() {
-        super.layoutSubviews()
+    fileprivate func setLayout() {
         imageView.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalTo(self)
         }

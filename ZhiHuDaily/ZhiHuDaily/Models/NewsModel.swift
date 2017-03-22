@@ -38,6 +38,7 @@ class NewsModel: NSObject {
     
     //MARK: - layout
     
+    // for news cell
     var newsCellHeight: CGFloat = 90
 
     init(from news: News) {
@@ -69,3 +70,4 @@ class NewsModel: NSObject {
         
     }
 }
+

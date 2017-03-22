@@ -70,7 +70,7 @@ class MainNavigationBar: UIView {
     override func layoutSubviews() {
         menuButton.snp.makeConstraints { (make) in
             make.left.equalTo(12)
-            make.centerY.equalTo(self).offset(10)
+            make.centerY.equalTo(self)
         }
         
         titleLabel.snp.makeConstraints { (make) in

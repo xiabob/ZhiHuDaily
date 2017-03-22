@@ -10,16 +10,21 @@ import UIKit
 import MJRefresh
 
 class MainVC: UIViewController {
+    fileprivate lazy var statusBackgroundView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kStatusBarHeight))
+        view.backgroundColor = kMainNavigationBarColor.withAlphaComponent(0)
+        return view
+    }()
     
     fileprivate lazy var barView: MainNavigationBar = {
-        let view = MainNavigationBar(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: 60), scrollView: self.newsTableView)
+        let view = MainNavigationBar(frame: CGRect(x: 0, y: kStatusBarHeight, width: kScreenWidth, height: 40), scrollView: self.newsTableView)
         view.backgroundColor = kMainNavigationBarColor.withAlphaComponent(0)
         view.delegate = self
         return view
     }()
     
     fileprivate lazy var bannerView: XBCycleView = {
-        let view = XBCycleView(frame: CGRect(x: 0, y: -kBannerOffsetHeight, width: kScreenWidth, height: 220+kBannerOffsetHeight), imageArray: [])
+        let view = XBCycleView(frame: CGRect(x: 0, y: -kBannerOffsetHeight, width: kScreenWidth, height: 200+kBannerOffsetHeight), imageArray: [])
         view.autoScrollTimeInterval = 4
         view.delegate = self
         return view
@@ -33,7 +38,7 @@ class MainVC: UIViewController {
     }()
     
     fileprivate lazy var newsTableView: UITableView = {
-        let tableView: UITableView = UITableView(frame: self.view.bounds, style: .plain)
+        let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: kStatusBarHeight, width: kScreenWidth, height: kScreenHeight-kStatusBarHeight), style: .plain)
         tableView.register(NewsCell.self, forCellReuseIdentifier: NSStringFromClass(NewsCell.self))
         tableView.delegate = self
         tableView.dataSource = self
@@ -43,12 +48,14 @@ class MainVC: UIViewController {
         tableView.tableHeaderView = headerView //在设置代理之前设置header，就会出现tableview底部多了一块空区域
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.clear
+        tableView.clipsToBounds = false
         tableView.mj_footer = self.refreshFooter
         return tableView
     }()
     
     fileprivate var topBannerNews: [NewsModel] = []
     fileprivate var normalNews: [[NewsModel]] = []
+    fileprivate var firsetSectionHeaderOffset: CGFloat = 0
     
     fileprivate lazy var getLatestNewsDS: GetLatestNews = {
         let ds = GetLatestNews()
@@ -87,8 +94,10 @@ class MainVC: UIViewController {
     
     fileprivate func configViews() {
         view.addSubview(newsTableView)
-        view.addSubview(bannerView)
+        //添加到newsTableView上是为了方便处理在bannerView上的下拉操作
+        newsTableView.addSubview(bannerView)
         view.addSubview(barView)
+        view.addSubview(statusBackgroundView)
     }
 
     //MARK: - load data
@@ -141,6 +150,10 @@ class MainVC: UIViewController {
             return XBCycleViewImageModel(title: model.title, describe: nil, imageUrlString: model.imageUrl, localImage: nil)
         })
         newsTableView.reloadData()
+        
+        let count = CGFloat(normalNews.first?.count ?? 0)
+        let cellHeight = normalNews.first?.first?.newsCellHeight ?? 0
+        firsetSectionHeaderOffset = newsTableView.tableHeaderView!.xb_height + count * cellHeight
     }
 }
 
@@ -181,23 +194,15 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.01
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 0.01
+            return 0
         } else {
-            return 44
+            return 40
         }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        print("willDisplayHeaderView:\(section)")
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-        print("didEndDisplayingHeaderView:\(section)")
     }
 }
 
@@ -218,7 +223,7 @@ extension MainVC: MainNavigationBarDelegate {
 
 //MARK: - UIScrollViewDelegate
 
-fileprivate let kBannerOffsetHeight: CGFloat = 30
+fileprivate let kBannerOffsetHeight: CGFloat = 50
 fileprivate let kScrollViewMaxOffset: CGFloat = 100
 fileprivate let kBarStartOffset: CGFloat = 60
 fileprivate let kBarScrollLength: CGFloat = 130
@@ -230,18 +235,33 @@ extension MainVC: UIScrollViewDelegate {
             scrollView.contentOffset = CGPoint(x: 0, y: -kScrollViewMaxOffset)
         }
         
-        //轮播banner
+        //轮播banner，如果是添加到view上，那么bannerView.y = -kBannerOffsetHeight，因为tableview是scrollview，会改变bannerView的相对位置，所以需要加上一个相对偏移offsetY
         bannerView.height = bannerView.origineHeight - offsetY
-        bannerView.y = -kBannerOffsetHeight
+        bannerView.y = -kBannerOffsetHeight + offsetY
         
         //导航栏透明度
         var alpha: CGFloat = 0
         if offsetY <= kBarStartOffset {
             alpha = 0
+            barView.backgroundColor = kMainNavigationBarColor.withAlphaComponent(alpha)
+            statusBackgroundView.backgroundColor = barView.backgroundColor
+        } else if offsetY <= kBarScrollLength + kBarStartOffset {
+            alpha = (offsetY-kBarStartOffset)/kBarScrollLength
+            barView.backgroundColor = kMainNavigationBarColor.withAlphaComponent(alpha)
+            statusBackgroundView.backgroundColor = barView.backgroundColor
         } else {
-            alpha = min(CGFloat((offsetY-kBarStartOffset)/kBarScrollLength), CGFloat(1))
+            statusBackgroundView.backgroundColor = kMainNavigationBarColor.withAlphaComponent(1)
+            
+            if firsetSectionHeaderOffset > 0 {
+                if offsetY < firsetSectionHeaderOffset {
+                    barView.backgroundColor = kMainNavigationBarColor.withAlphaComponent(1)
+                    barView.refreshBar(with: "今日热闻")
+                } else {
+                    barView.backgroundColor = kMainNavigationBarColor.withAlphaComponent(0)
+                    barView.refreshBar(with: "")
+                }
+            }
         }
-        barView.backgroundColor = kMainNavigationBarColor.withAlphaComponent(alpha)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

@@ -15,6 +15,7 @@ class NewsCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor.black
         label.numberOfLines = 2
+        label.textAlignment = .natural
         return label
     }()
     
@@ -47,7 +48,6 @@ class NewsCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         configViews()
-        setLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,39 +61,26 @@ class NewsCell: UITableViewCell {
         addSubview(bottomLine)
     }
     
-    fileprivate func setLayout() {
-        titleLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(12)
-            make.right.equalTo(newsImageView.snp.left).offset(-12)
-            make.top.equalTo(12)
-            make.bottom.lessThanOrEqualTo(-12)
-        }
-        
-        newsImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel)
-            make.bottom.equalTo(-12)
-            make.right.equalTo(-12)
-            make.width.equalTo(86)
-        }
-        
-        flagImageView.snp.makeConstraints { (make) in
-            make.right.bottom.equalTo(newsImageView)
-            make.size.equalTo(CGSize(width: 32, height: 14))
-        }
-        
-        bottomLine.snp.makeConstraints { (make) in
-            make.left.equalTo(titleLabel)
-            make.right.equalTo(newsImageView)
-            make.bottom.equalTo(self)
-            make.height.equalTo(0.5)
-        }
-    }
-    
     fileprivate func updateLayout() {
-        let imageWidth: CGFloat = (newsModel?.imageUrl.isEmpty ?? false) ? 0 : 86
-        newsImageView.snp.updateConstraints { (make) in
-            make.width.equalTo(imageWidth)
-        }
+        let imageWidth: CGFloat = newsModel!.imageUrl.isEmpty  ? 0 : 86
+        newsImageView.xb_top = 12
+        newsImageView.xb_relativeBottom = xb_height - 12
+        newsImageView.xb_width = imageWidth
+        newsImageView.xb_right = xb_width - 12
+        
+        titleLabel.xb_top = newsImageView.xb_top
+        titleLabel.xb_left = 12
+        titleLabel.xb_relativeRight = newsImageView.xb_left - 12
+        titleLabel.xb_height = titleLabel.text?.heightWithConstrainedWidth(titleLabel.xb_width, font: titleLabel.font) ?? 0
+        
+        flagImageView.xb_size = CGSize(width: 32, height: 14)
+        flagImageView.xb_right = newsImageView.xb_right
+        flagImageView.xb_bottom = newsImageView.xb_bottom
+        
+        bottomLine.xb_left = titleLabel.xb_left
+        bottomLine.xb_relativeRight = newsImageView.xb_relativeRight
+        bottomLine.xb_height = 0.5
+        bottomLine.xb_bottom = xb_height
     }
     
     func refreshViews(with newsModel: NewsModel) {
