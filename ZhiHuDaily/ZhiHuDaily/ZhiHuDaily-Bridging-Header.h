@@ -14,7 +14,7 @@
 #import <YYText/YYText.h>
 #import <MJRefresh/MJRefresh.h>
 #import <MMDrawerController/MMDrawerController.h>
-
+#import <FDFullscreenPopGesture/UINavigationController+FDFullscreenPopGesture.h>
 
 //
 #import "XBUtils.h"

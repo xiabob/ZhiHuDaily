@@ -12,6 +12,7 @@ target 'ZhiHuDaily' do
     pod 'MJRefresh'
     pod 'Toast-Swift'
     pod 'MMDrawerController'
+    pod 'FDFullscreenPopGesture'
 end
 
 

@@ -74,22 +74,14 @@ class MainVC: UIViewController {
         configViews()
         loadLatestNews()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
 
     //MARK: - config views
     
     fileprivate func commonInit() {
         automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = UIColor.white
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        fd_prefersNavigationBarHidden = true
     }
     
     fileprivate func configViews() {
@@ -155,6 +147,12 @@ class MainVC: UIViewController {
         let cellHeight = normalNews.first?.first?.newsCellHeight ?? 0
         firsetSectionHeaderOffset = newsTableView.tableHeaderView!.xb_height + count * cellHeight
     }
+    
+    fileprivate func pushDetailWebVC(model: NewsModel) {
+        let detailVC = NewsDetailWebVC()
+        detailVC.newsModel = model
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 
@@ -203,6 +201,11 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             return 40
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = normalNews[indexPath.section][indexPath.row]
+        pushDetailWebVC(model: model)
     }
 }
 
@@ -276,6 +279,7 @@ extension MainVC: UIScrollViewDelegate {
 //MARK: - XBCycleViewDelegate
 extension MainVC: XBCycleViewDelegate {
     func tapImage(_ cycleView: XBCycleView, currentImage: UIImage?, currentIndex: Int) {
-        
+        let model = topBannerNews[currentIndex]
+        pushDetailWebVC(model: model)
     }
 }

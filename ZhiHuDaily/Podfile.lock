@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.4.0)
+  - FDFullscreenPopGesture (1.1)
   - MJRefresh (3.1.12)
   - MMDrawerController (0.6.0):
     - MMDrawerController/Core (= 0.6.0)
@@ -28,6 +29,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - FDFullscreenPopGesture
   - MJRefresh
   - MMDrawerController
   - SnapKit
@@ -39,6 +41,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
@@ -50,6 +53,6 @@ SPEC CHECKSUMS:
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 205a9e454c0d453da9111f3145525c01ec059a54
+PODFILE CHECKSUM: 19029e20a09d596e98a95a41321ed67021d73d08
 
 COCOAPODS: 1.1.1
