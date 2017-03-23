@@ -74,6 +74,16 @@ class MainVC: UIViewController {
         configViews()
         loadLatestNews()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bannerView.isAutoCycle = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        bannerView.isAutoCycle = false
+    }
 
     //MARK: - config views
     
@@ -149,9 +159,79 @@ class MainVC: UIViewController {
     }
     
     fileprivate func pushDetailWebVC(model: NewsModel) {
-        let detailVC = NewsDetailWebVC()
-        detailVC.newsModel = model
+        let detailVC = NewsDetailWebVC(from: model)
+        detailVC.dataSource = self
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+
+//MARK: - NewsDetailWebVCDataSource
+
+extension MainVC: NewsDetailWebVCDataSource {
+    func newsDetail(webVC: NewsDetailWebVC, newsPositionFrom newsID: Int) -> NewsPositionInNewsList {
+        var position = NewsPositionInNewsList.middle
+        if normalNews.first!.first!.newsID == newsID {
+            position = .first
+        } else if normalNews.last!.last!.newsID == newsID {
+            position = .last
+        }
+        
+        if normalNews.count == 1 && normalNews.first!.count == 1 {
+            position = .alone
+        }
+        
+        return position
+    }
+    
+    func newsDetail(webVC: NewsDetailWebVC, preNewsIDFrom currentNewsID: Int) -> Int {
+        var newsIndex = 0
+        let sectionIndex: Int = normalNews.index { (newsSection) -> Bool in
+            newsSection.contains(where: { (model) -> Bool in
+                if model.newsID == currentNewsID {
+                    newsIndex = newsSection.index(of: model)!
+                    return true
+                } else {
+                    return false
+                }
+            })
+        } ?? 0
+        
+        var preNewsID = 0
+        if sectionIndex == 0 && newsIndex == 0 {
+            preNewsID = -1
+        } else if newsIndex == 0 {
+            preNewsID = normalNews[sectionIndex-1].last!.newsID
+        } else {
+            preNewsID = normalNews[sectionIndex][newsIndex-1].newsID
+        }
+        
+        return preNewsID
+    }
+    
+    func newsDetail(webVC: NewsDetailWebVC, nextNewsIDFrom currentNewsID: Int) -> Int {
+        var newsIndex = 0
+        let sectionIndex: Int = normalNews.index { (newsSection) -> Bool in
+            newsSection.contains(where: { (model) -> Bool in
+                if model.newsID == currentNewsID {
+                    newsIndex = newsSection.index(of: model)!
+                    return true
+                } else {
+                    return false
+                }
+            })
+        } ?? 0
+        
+        var nextNewsID = 0
+        if sectionIndex == normalNews.count-1 && newsIndex == normalNews[sectionIndex].count-1 {
+            nextNewsID = -1
+        } else if newsIndex == normalNews[sectionIndex].count-1 {
+            nextNewsID = normalNews[sectionIndex+1].first!.newsID
+        } else {
+            nextNewsID = normalNews[sectionIndex][newsIndex+1].newsID
+        }
+        
+        return nextNewsID
     }
 }
 
