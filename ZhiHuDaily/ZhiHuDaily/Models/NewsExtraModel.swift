@@ -19,23 +19,35 @@ class NewsExtraModel: NSObject {
     ///评论总数
     var allCommentNumber = 0
     
+    ///是否点赞
+    var hasVoted = false
+    
+    ///是否收藏
+    var hasCollect = false
+    
     override init() {
         super.init()
     }
     
-    convenience init(from commentBriefDic: JSON) {
+    convenience init(from briefDic: JSON) {
         self.init()
-        update(from: commentBriefDic)
+        update(from: briefDic)
     }
     
-    func update(from commentBriefDic: JSON) {
+    func update(from briefDic: JSON) {
+//        {"count":{"long_comments":3,"short_comments":14,"comments":17,"likes":117},"vote_status":0,"favorite":false}
+        
         //    long_comments : 长评论总数
         //    popularity : 点赞总数
         //    short_comments : 短评论总数
         //    comments : 评论总数
-        longCommentNumber = commentBriefDic["long_comments"].intValue
-        voteNumber = commentBriefDic["popularity"].intValue
-        shortCommentNumber = commentBriefDic["short_comments"].intValue
-        allCommentNumber = commentBriefDic["comments"].intValue
+        let countJson = briefDic["count"]
+        longCommentNumber = countJson["long_comments"].intValue
+        voteNumber = countJson["likes"].intValue
+        shortCommentNumber = countJson["short_comments"].intValue
+        allCommentNumber = countJson["comments"].intValue
+        
+        hasVoted = briefDic["vote_status"].boolValue
+        hasCollect = briefDic["favorite"].boolValue
     }
 }

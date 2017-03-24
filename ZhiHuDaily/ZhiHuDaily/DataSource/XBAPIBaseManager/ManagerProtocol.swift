@@ -45,5 +45,7 @@ public extension ManagerProtocol {
     var isJsonData: Bool {return true} //默认是json数据
     var shouldCache: Bool {return false}
     
-    func parseResponseData(_ data: AnyObject) { debugPrint("subclass not implement parseResponseData method, you should do this at other place") } //甚至解析操作都可以延后至其他地方（比如vc中）
+    func parseResponseData(_ data: AnyObject) {
+//        debugPrint("subclass not implement parseResponseData method, you should do this at other place") 
+    } //甚至解析操作都可以延后至其他地方（比如vc中）
 }

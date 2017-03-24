@@ -89,6 +89,11 @@ class NewsDetailWebVC: UIViewController {
         return ds
     }()
     
+    fileprivate lazy var voteNews: VoteNews = {
+        let ds = VoteNews()
+        return ds
+    }()
+    
     fileprivate var statusBarStyle: UIStatusBarStyle = .lightContent {
         didSet {
             UIApplication.shared.setStatusBarStyle(statusBarStyle, animated: true)
@@ -144,6 +149,11 @@ class NewsDetailWebVC: UIViewController {
     }
 
     func loadNewsDetailData() {
+        loadDetailData()
+        loadExtraData()
+    }
+    
+    fileprivate func loadDetailData() {
         getNewsDetailDS.newsID = newsID
         getNewsDetailDS.loadData { [weak self](api) in
             guard let wself = self else {return}
@@ -152,7 +162,9 @@ class NewsDetailWebVC: UIViewController {
             wself.webView.loadHTMLString(htmlString, baseURL: nil)
             wself.topBarView.refreshViews(with: wself.newsModel)
         }
-        
+    }
+    
+    fileprivate func loadExtraData() {
         getNewsExtraDS.newsID = newsID
         getNewsExtraDS.loadData { [weak self](api) in
             guard let wself = self else {return}
@@ -273,7 +285,10 @@ extension NewsDetailWebVC: NewsDetailBottomToolBarDelegate {
     }
     
     func bottomToolBar(_ toolBar: NewsDetailBottomToolBar, didClickVoteButton button: UIButton) {
-        
+        voteNews.newsID = newsID
+        voteNews.loadData { [weak self](api) in
+            self?.loadExtraData()
+        }
     }
     
     func bottomToolBar(_ toolBar: NewsDetailBottomToolBar, didClickShareButton button: UIButton) {

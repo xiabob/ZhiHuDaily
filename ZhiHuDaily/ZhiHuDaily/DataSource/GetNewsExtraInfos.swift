@@ -13,13 +13,15 @@ class GetNewsExtraInfos: XBAPIBaseManager, ManagerProtocol {
     var newsID = 0
     var model: NewsExtraModel?
     
+    var baseUrl: String {return "https://news-at.zhihu.com/api/"}
+    var apiVersion: String {return "7"}
     var path: String {
         return "/story-extra/\(newsID)"
     }
     
     func parseResponseData(_ data: AnyObject) {
         let extraJson = JSON(data)
-        if extraJson.dictionaryValue.values.count == 4 {
+        if extraJson.dictionaryValue.values.count > 0 {
             errorCode = Error(code: .success, errorMessage: "")
             model = NewsExtraModel(from: extraJson)
         } else {

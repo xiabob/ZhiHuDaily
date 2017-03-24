@@ -77,6 +77,20 @@ class NewsDetailBottomToolBar: UIView {
         return label
     }()
     
+    fileprivate lazy var voteNumberView: UIImageView = {
+        let view = UIImageView(image: #imageLiteral(resourceName: "News_Number_Bg"))
+        view.sizeToFit()
+        return view
+    }()
+    
+    fileprivate lazy var voteNumberLabel: ScrollNumberLabel = {
+        let rect = CGRect(x: 0, y: 0, width: 40, height: 20)
+        let label = ScrollNumberLabel(frame: rect, originNumber: 0)
+        label.center = CGPoint(x: self.voteNumberView.xb_width/2, y: self.voteNumberView.xb_height/2 - 3)
+        label.textColor = UIColor.white
+        return label
+    }()
+    
     weak var delegate: NewsDetailBottomToolBarDelegate?
     var extraModel: NewsExtraModel?
     
@@ -120,6 +134,8 @@ class NewsDetailBottomToolBar: UIView {
         addSubview(commentButton)
         commentLabel.frame = CGRect(x: commentButton.xb_width/2, y: 10, width: 20, height: 12)
         commentButton.addSubview(commentLabel)
+        
+        voteNumberView.addSubview(voteNumberLabel)
     }
     
     func refreshViews(with model: NewsExtraModel?, andNewsPosition position: NewsPositionInNewsList) {
@@ -133,6 +149,13 @@ class NewsDetailBottomToolBar: UIView {
         let voteNumber = extraModel?.voteNumber ?? 0
         voteLabel.text = voteNumber > 0 ? "\(voteNumber)" : ""
         commentLabel.text = "\(extraModel?.allCommentNumber ?? 0)"
+        voteNumberLabel.change(toNewNumber: UInt(voteNumber))
+        
+        if model?.hasVoted ?? false {
+            voteButton.setImage(#imageLiteral(resourceName: "News_Navigation_Voted"), for: .normal)
+        } else {
+            voteButton.setImage(#imageLiteral(resourceName: "News_Navigation_Vote"), for: .normal)
+        }
     }
     
     //MARK: - action
@@ -142,12 +165,36 @@ class NewsDetailBottomToolBar: UIView {
     }
     
     @objc fileprivate func onNextButtonClicked() {
-        
         delegate?.bottomToolBar(self, didClickNextButton: nextButton)
     }
     
     @objc fileprivate func onVoteButtonClicked() {
-        delegate?.bottomToolBar(self, didClickVoteButton: voteButton)
+        voteNumberView.center = CGPoint(x: voteButton.xb_centerX, y: 0)
+        voteNumberView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+        voteNumberView.alpha = 0
+        addSubview(voteNumberView)
+        
+        UIView.animate(withDuration: 0.25) {
+            self.voteNumberView.transform = CGAffineTransform.identity
+            self.voteNumberView.xb_centerY = -20
+            self.voteNumberView.alpha = 1
+        }
+
+        let vote = (extraModel?.hasVoted ?? false) ? (extraModel?.voteNumber ?? 0) - 1 : (extraModel?.voteNumber ?? 0) + 1
+        dispatchMain(after: 0.5) {
+            self.voteNumberLabel.change(toNewNumber: UInt(vote))
+        }
+        
+        dispatchMain(after: 0.9) {
+            UIView.animate(withDuration: 0.25, animations: { 
+                self.voteNumberView.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                self.voteNumberView.xb_centerY = 0
+                self.voteNumberView.alpha = 0
+            }, completion: { (finished) in
+                self.voteNumberView.removeFromSuperview()
+                self.delegate?.bottomToolBar(self, didClickVoteButton: self.voteButton)
+            })
+        }
     }
     
     @objc fileprivate func onShareButtonClicked() {

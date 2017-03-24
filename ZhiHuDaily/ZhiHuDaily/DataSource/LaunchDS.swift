@@ -17,7 +17,7 @@ class LaunchDS: XBAPIBaseManager, ManagerProtocol {
     var apiVersion: String {return "7"}
     
     var path: String {
-        return "/prefetch-launch-images/1080*1776"
+        return "/prefetch-launch-images/\(Int(kScreenWidth*2))*\(Int(kScreenHeight*2))"
     }
     
     var shouldCache: Bool {return true}
