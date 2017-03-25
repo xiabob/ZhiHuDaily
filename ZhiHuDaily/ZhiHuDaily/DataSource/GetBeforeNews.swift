@@ -8,13 +8,33 @@
 
 import UIKit
 import SwiftyJSON
+import SwiftDate
 
 class GetBeforeNews: XBAPIBaseManager, ManagerProtocol {
     var normalNewsModel: [NewsModel] = []
     var beforeDate = ""
+    var currentDate = ""
     
     var path: String {
         return "/news/before/" + beforeDate
+    }
+    
+    var useCustomLoadFromLocal: Bool {return true}
+    
+    func customLoadFromLocal() {
+        guard let realm = RealmManager.shared.defaultRealm else {return}
+        
+        var resultDate = Date()
+        do {
+            let date = try beforeDate.date(format: .custom("yyyyMMdd"))
+            resultDate = date.absoluteDate - 1.day
+        } catch {}
+        currentDate = resultDate.string(format: .custom("yyyyMMdd"))
+        
+        let normalNews = News.fetchNews(from: realm, withDate: currentDate)
+        normalNewsModel = normalNews.map({ (news) -> NewsModel in
+            return NewsModel(from: news)
+        })
     }
     
     func parseResponseData(_ data: AnyObject) {
@@ -24,12 +44,24 @@ class GetBeforeNews: XBAPIBaseManager, ManagerProtocol {
         
         let normalStories = json["stories"].arrayValue
         var normalNews: [News] = []
-        for newsDic in normalStories {
-            let news = News(from: newsDic, dateString: date)
-            normalNews.append(news)
-        }
-        normalNewsModel = normalNews.map({ (news) -> NewsModel in
-            return NewsModel(from: news)
+        
+        let realm = RealmManager.shared.defaultRealm
+        try? realm?.write({ 
+            for newsDic in normalStories {
+                let newsID = newsDic["id"].intValue
+                let existNews = realm?.object(ofType: News.self, forPrimaryKey: newsID)
+                if let existNews = existNews { //存在则更新
+                    existNews.update(from: newsDic, dateString: date)
+                    normalNews.append(existNews)
+                } else { //否则创建新的实体
+                    let news = News(from: newsDic, dateString: date)
+                    realm?.add(news)
+                    normalNews.append(news)
+                }
+            }
+            normalNewsModel = normalNews.map({ (news) -> NewsModel in
+                return NewsModel(from: news)
+            })
         })
     }
 }

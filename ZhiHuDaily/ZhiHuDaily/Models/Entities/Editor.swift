@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import RealmSwift
 
 ///编辑，一般都是新闻的推荐者
-class Editor: NSObject {
+class Editor: Object, RLMObjectHelperProtocol {
 //    url : 主编的知乎用户主页
 //    bio : 主编的个人简介
 //    id : 数据库中的唯一表示符
@@ -17,13 +18,21 @@ class Editor: NSObject {
 //    name : 主编的姓名
     
     ///用户id
-    var editorID = 0
+    dynamic var editorID = 0
     ///用户名
-    var name = ""
+    dynamic var name = ""
     ///用户头像url字符串
-    var avatar = ""
+    dynamic var avatar = ""
     ///个人简介
-    var bio = ""
+    dynamic var bio = ""
     ///知乎用户主页url
-    var zhihuUrl = ""
+    dynamic var zhihuUrl = ""
+}
+
+
+//MARK: - Realm
+extension Editor {
+    override class func primaryKey() -> String? {
+        return "editorID"
+    }
 }

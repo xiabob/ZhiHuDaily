@@ -57,6 +57,7 @@
 		74507E121E860A3100D6606C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0F1E860A3100D6606C /* Realm.framework */; };
 		74507E131E860A3100D6606C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0F1E860A3100D6606C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74507E171E860E3E00D6606C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74507E161E860E3E00D6606C /* RealmManager.swift */; };
+		74507E191E8613FF00D6606C /* Realm+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74507E181E8613FF00D6606C /* Realm+Extensions.swift */; };
 		7459EADC1E82395B009B6C78 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADB1E82395B009B6C78 /* ViewUtils.swift */; };
 		7459EADE1E823C64009B6C78 /* NewsDetailWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */; };
 		7459EAE01E825152009B6C78 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADF1E825152009B6C78 /* Editor.swift */; };
@@ -156,6 +157,7 @@
 		74507E0E1E860A3100D6606C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		74507E0F1E860A3100D6606C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		74507E161E860E3E00D6606C /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		74507E181E8613FF00D6606C /* Realm+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Realm+Extensions.swift"; sourceTree = "<group>"; };
 		7459EADB1E82395B009B6C78 /* ViewUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsDetailWebVC.swift; sourceTree = "<group>"; };
 		7459EADF1E825152009B6C78 /* Editor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				74507E161E860E3E00D6606C /* RealmManager.swift */,
+				74507E181E8613FF00D6606C /* Realm+Extensions.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				7443CC311E83D03000602D80 /* GetNewsExtraInfos.swift in Sources */,
 				7447DACB1E7B876E009C2349 /* XBAPIChain.swift in Sources */,
 				7447DB031E7B8F19009C2349 /* LaunchVC.swift in Sources */,
+				74507E191E8613FF00D6606C /* Realm+Extensions.swift in Sources */,
 				74507E171E860E3E00D6606C /* RealmManager.swift in Sources */,
 				16E2B52B1E7D13F1001CE63B /* XBCycleView.swift in Sources */,
 				7447DAF01E7B878A009C2349 /* UIButton+XBPosition.m in Sources */,

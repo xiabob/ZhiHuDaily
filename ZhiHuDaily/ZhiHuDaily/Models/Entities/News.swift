@@ -8,45 +8,74 @@
 
 import UIKit
 import SwiftyJSON
+import RealmSwift
+import Realm
 
-class News: NSObject {
+class News: Object, RLMObjectHelperProtocol {
     //baisc
     
     ///消息id
-    var newsID = 0
-    var title = ""
-    var imageUrl = ""
-    var type = 0
+    dynamic var newsID = 0
+    ///标题
+    dynamic var title = ""
+    ///列表中展示的图片
+    dynamic var imageUrl = ""
+    dynamic var type = 0
     ///消息对应的日期，格式“20170318”
-    var date = ""
+    dynamic var date = ""
     ///消息内容是否包含多张图
-    var isMultipic = false
+    dynamic var isMultipic = false
     ///消息是否被点击过
-    var isRead = false
+    dynamic var isRead = false
     ///消息展示的类型，0表示普通消息，1表示是首页轮播展示的消息
-    var showType = 0
+    dynamic var showType = 0
     
     //detail var
     
     ///HTML 格式的新闻
-    var body = ""
+    dynamic var body = ""
     ///图片的内容提供方
-    var imageSource = ""
+    dynamic var imageSource = ""
     ///文章浏览界面中使用的大图
-    var detailImageUrl = ""
+    dynamic var detailImageUrl = ""
     ///供在线查看内容与分享至 SNS 用的 URL
-    var shareUrl = ""
+    dynamic var shareUrl = ""
     ///供手机端使用的js内容
-    var js = ""
+    dynamic var js = ""
     ///供手机端使用的css内容
-    var css = ""
-    ///这篇文章的推荐者
-    var recommenders: [Editor] = []
-    ///栏目的信息
-    var theme = Theme()
+    dynamic var css = ""
+    ///这篇文章的推荐者，原始字符串信息
+    dynamic var recommenders = ""
+    ///栏目的信息，原始字符串信息
+    dynamic var theme = ""
     
-    override init() {
+    required init() {
         super.init()
+    }
+    
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        super.init(realm: realm, schema: schema)
+    }
+    
+    required init(value: Any, schema: RLMSchema) {
+        super.init(value: value, schema: schema)
+    }
+    
+}
+
+//MARK: - Realm
+extension News {
+    override class func primaryKey() -> String? {
+        return "newsID"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        //设置为临时属性
+        return ["recommenders", "theme"]
+    }
+    
+    class func fetchNews(from realm: Realm, withDate date: String) -> [News] {
+        return getEntities(from: realm, withPredicate: NSPredicate(format: "date = %@", date))
     }
 }
 
@@ -56,6 +85,8 @@ extension News {
     ///初始化普通消息
     convenience init(from normalNewsDic: JSON, dateString: String) {
         self.init()
+        //主键不能重复设置
+        newsID = normalNewsDic["id"].intValue
         update(from: normalNewsDic, dateString: dateString)
     }
     
@@ -67,7 +98,6 @@ extension News {
 //        "type": 0,
 //        "id": 9293223
         
-        newsID = normalNewsDic["id"].intValue
         title = normalNewsDic["title"].stringValue
         imageUrl = normalNewsDic["images"].arrayValue.map({ (value) -> String in
             return value.stringValue
@@ -85,6 +115,7 @@ extension News {
     ///初始化首页banner消息
     convenience init(from topNewsDic: JSON) {
         self.init()
+        newsID = topNewsDic["id"].intValue
         update(from: topNewsDic)
     }
     
@@ -95,7 +126,6 @@ extension News {
 //        "ga_prefix": "031810",
 //        "title": "中国有哪些好看的科幻小说选集？"
         
-        newsID = topNewsDic["id"].intValue
         title = topNewsDic["title"].stringValue
         imageUrl = topNewsDic["image"].stringValue
         type = topNewsDic["type"].intValue
@@ -111,6 +141,7 @@ extension News {
 extension News {
     convenience init(detailNewsDic: JSON) {
         self.init()
+        newsID = detailNewsDic["id"].intValue
         update(detailNewsDic: detailNewsDic)
     }
     
@@ -150,22 +181,11 @@ extension News {
             return value.stringValue
         }).first ?? ""
         
-        recommenders.removeAll()
-        for recommender in detailNewsDic["recommenders"].arrayValue {
-            let editor = Editor()
-            editor.avatar = recommender["avatar"].stringValue
-            recommenders.append(editor)
-        }
+        recommenders = detailNewsDic["recommenders"].stringValue
         
-        let section = detailNewsDic["section"]
-        let thisTheme = Theme()
-        thisTheme.themeID = section["id"].intValue
-        thisTheme.name = section["name"].stringValue
-        thisTheme.thumbnail = section["thumbnail"].stringValue
-        theme = thisTheme
+        theme = detailNewsDic["section"].stringValue
         
         type = detailNewsDic["type"].intValue
-        newsID = detailNewsDic["id"].intValue
         
         css = detailNewsDic["css"].arrayValue.map({ (value) -> String in
             return value.stringValue

@@ -105,6 +105,18 @@ class MainVC: UIViewController {
     //MARK: - load data
     
     fileprivate func loadLatestNews() {
+        getLatestNewsDS.loadDataFromLocal { [weak self](api) in
+            guard let wself = self else {return}
+            wself.topBannerNews = wself.getLatestNewsDS.topBannerNewsModel
+            wself.normalNews.append(wself.getLatestNewsDS.normalNewsModel)
+            wself.refreshViews()
+            
+            //fetch from network
+            wself.loadNetWorkLatestNews()
+        }
+    }
+    
+    fileprivate func loadNetWorkLatestNews() {
         getLatestNewsDS.loadData { [weak self](api) in
             guard let wself = self else {return}
             wself.topBannerNews = wself.getLatestNewsDS.topBannerNewsModel
@@ -137,14 +149,47 @@ class MainVC: UIViewController {
         //若果需要查询 11 月 18 日的消息，before 后的数字应为 20131119
         guard let model = normalNews.last?.first else {return}
         getBeforeNewsDS.beforeDate = model.rawDate
-        getBeforeNewsDS.loadData { [weak self](api) in
+        getBeforeNewsDS.loadDataFromLocal { [weak self](api) in
             guard let wself = self else {return}
+            var hasLocalData = false
             if wself.getBeforeNewsDS.normalNewsModel.count > 0 {
                 wself.normalNews.append(wself.getBeforeNewsDS.normalNewsModel)
+                hasLocalData = true
             }
             wself.newsTableView.reloadData()
             wself.refreshFooter.endRefreshing()
+            
+            //get from network again
+            wself.loadNetworkBeforeNews(hasLocalData: hasLocalData)
         }
+    }
+    
+    fileprivate func loadNetworkBeforeNews(hasLocalData: Bool) {
+        getBeforeNewsDS.loadData { [weak self](api) in
+            guard let wself = self else {return}
+            if wself.getBeforeNewsDS.normalNewsModel.count > 0 {
+                if hasLocalData {
+                    wself.normalNews[wself.normalNews.count-1] = wself.getBeforeNewsDS.normalNewsModel
+                } else {
+                    wself.normalNews.append(wself.getBeforeNewsDS.normalNewsModel)
+                }
+            }
+            wself.newsTableView.reloadData()
+        }
+    }
+    
+    fileprivate func getModel(from newsID: Int, inModels newsModels: [NewsModel]) -> NewsModel? {
+        var result: NewsModel?
+        let _ = newsModels.contains { (innnerModel) -> Bool in
+            if innnerModel.newsID == newsID {
+                result = innnerModel
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        return result
     }
 
     fileprivate func refreshViews() {
@@ -232,6 +277,21 @@ extension MainVC: NewsDetailWebVCDataSource {
         }
         
         return nextNewsID
+    }
+    
+    func newsDetail(webVC: NewsDetailWebVC, newsHasReaded currentNewsID: Int) {
+        let _ = normalNews.index { (newsSection) -> Bool in
+            newsSection.contains(where: { (model) -> Bool in
+                if model.newsID == currentNewsID {
+                    model.isRead = true
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        
+        newsTableView.reloadData()
     }
 }
 
@@ -344,6 +404,11 @@ extension MainVC: UIScrollViewDelegate {
                     barView.refreshBar(with: "")
                 }
             }
+        }
+        
+        let cellHeight = normalNews.first?.first?.newsCellHeight ?? 90
+        if offsetY >= scrollView.contentSize.height - scrollView.xb_height - cellHeight * 10 {
+            refreshFooter.beginRefreshing()
         }
     }
     

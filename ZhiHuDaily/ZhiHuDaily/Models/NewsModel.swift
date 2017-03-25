@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftDate
+import SwiftyJSON
 
  ///消息展示的类型
 enum NewsShowType: Int {
@@ -87,10 +88,18 @@ class NewsModel: NSObject {
         shareUrl = news.shareUrl
         js = news.js
         css = news.css
-        recommenders = news.recommenders.map({ (editor) -> EditorModel in
-            return EditorModel(from: editor)
-        })
-        theme = ThemeModel(from: news.theme)
+        
+        recommenders.removeAll()
+        for recommender in JSON(news.recommenders).arrayValue {
+            let editor = EditorModel()
+            editor.avatar = recommender["avatar"].stringValue
+            recommenders.append(editor)
+        }
+        
+        let themeJson = JSON(news.theme)
+        theme.themeID = themeJson["id"].intValue
+        theme.name = themeJson["name"].stringValue
+        theme.thumbnail = themeJson["thumbnail"].stringValue
     }
     
     ///根据existModel来更新NewsModel的内容
@@ -103,8 +112,12 @@ class NewsModel: NSObject {
         type = existModel.type < 0 ? type : existModel.type
         rawDate = existModel.rawDate.isEmpty ? rawDate : existModel.rawDate
         date = existModel.date.isEmpty ? date : existModel.date
-        isMultipic = existModel.isMultipic
-        isRead = existModel.isRead
+        if existModel.isMultipic {
+            isMultipic = existModel.isMultipic
+        }
+        if existModel.isRead {
+            isRead = existModel.isRead
+        }
         showType = existModel.showType.rawValue < 0 ? showType : existModel.showType
         body = existModel.body.isEmpty ? body : existModel.body
         imageSource = existModel.imageSource.isEmpty ? imageSource : existModel.imageSource
@@ -112,8 +125,6 @@ class NewsModel: NSObject {
         shareUrl = existModel.shareUrl.isEmpty ? shareUrl : existModel.shareUrl
         js = existModel.js.isEmpty ? js : existModel.js
         css = existModel.css.isEmpty ? css : existModel.css
-        recommenders = existModel.recommenders
-        theme = existModel.theme
     }
     
     fileprivate func getProcessedDate(dateString: String) -> String {

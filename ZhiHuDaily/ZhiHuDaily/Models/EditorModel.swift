@@ -20,8 +20,12 @@ class EditorModel: NSObject {
     ///知乎用户主页url
     var zhihuUrl = ""
     
-    init(from editor: Editor) {
+    override init() {
         super.init()
+    }
+    
+    convenience init(from editor: Editor) {
+        self.init()
         update(from: editor)
     }
     

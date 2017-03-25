@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import RealmSwift
 
 /// 日报的主题
-class Theme: NSObject {
+class Theme: Object, RLMObjectHelperProtocol {
 //    color : 颜色，作用未知
 //    thumbnail : 供显示的图片地址
 //    description : 主题日报的介绍
@@ -17,17 +18,25 @@ class Theme: NSObject {
 //    name : 供显示的主题日报名称
     
     ///该主题日报的编号
-    var themeID = 0
+    dynamic var themeID = 0
     
     ///供显示的主题日报名称
-    var name = ""
+    dynamic var name = ""
     
     ///背景缩略图url
-    var thumbnail = ""
+    dynamic var thumbnail = ""
     
     ///主题日报的介绍
-    var themeDescription = ""
+    dynamic var themeDescription = ""
     
     ///颜色，作用未知
-    var themeColor = 0
+    dynamic var themeColor = 0
+}
+
+
+//MARK: - Realm
+extension Theme {
+    override class func primaryKey() -> String? {
+        return "themeID"
+    }
 }

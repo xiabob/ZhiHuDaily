@@ -18,6 +18,7 @@ protocol NewsDetailWebVCDataSource: NSObjectProtocol {
     func newsDetail(webVC: NewsDetailWebVC, newsPositionFrom newsID: Int) -> NewsPositionInNewsList
     func newsDetail(webVC: NewsDetailWebVC, preNewsIDFrom currentNewsID: Int) -> Int
     func newsDetail(webVC: NewsDetailWebVC, nextNewsIDFrom currentNewsID: Int) -> Int
+    func newsDetail(webVC: NewsDetailWebVC, newsHasReaded currentNewsID: Int)
 }
 
 class NewsDetailWebVC: UIViewController {
@@ -149,11 +150,27 @@ class NewsDetailWebVC: UIViewController {
     }
 
     func loadNewsDetailData() {
-        loadDetailData()
+        loadDetailDataLocal()
         loadExtraData()
     }
     
-    fileprivate func loadDetailData() {
+    fileprivate func loadDetailDataLocal() {
+        //reset webview
+        webView.loadHTMLString("", baseURL: nil)
+        
+        getNewsDetailDS.newsID = newsID
+        getNewsDetailDS.loadDataFromLocal { [weak self](api) in
+            guard let wself = self else {return}
+            wself.newsModel = wself.getNewsDetailDS.model ?? wself.newsModel
+            let htmlString = "<html><head><link href=\(wself.newsModel.css) rel='stylesheet' type='text/css' /></head><body>\(wself.newsModel.body)</body></html>"
+            wself.webView.loadHTMLString(htmlString, baseURL: nil)
+            wself.topBarView.refreshViews(with: wself.newsModel)
+            
+            wself.loadDetailDataOnline()
+        }
+    }
+    
+    fileprivate func loadDetailDataOnline() {
         getNewsDetailDS.newsID = newsID
         getNewsDetailDS.loadData { [weak self](api) in
             guard let wself = self else {return}
@@ -161,6 +178,7 @@ class NewsDetailWebVC: UIViewController {
             let htmlString = "<html><head><link href=\(wself.newsModel.css) rel='stylesheet' type='text/css' /></head><body>\(wself.newsModel.body)</body></html>"
             wself.webView.loadHTMLString(htmlString, baseURL: nil)
             wself.topBarView.refreshViews(with: wself.newsModel)
+            wself.dataSource?.newsDetail(webVC: wself, newsHasReaded: wself.newsID)
         }
     }
     

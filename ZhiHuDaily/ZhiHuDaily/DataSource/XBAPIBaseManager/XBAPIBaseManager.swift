@@ -145,6 +145,21 @@ open class XBAPIBaseManager: NSObject {
     
     open func loadDataFromLocal() {
         guard let apiManager = apiManager else {return}
+        if apiManager.useCustomLoadFromLocal {
+            parseQueue.async {
+                apiManager.customLoadFromLocal()
+                DispatchQueue.main.async {
+                    if self.errorCode.code == .success {
+                        self.callOnManagerCallApiSuccess()
+                    } else {
+                        self.callOnManagerCallApiFailed()
+                    }
+                }
+            }
+            
+            return
+        }
+        
         requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
         
         if apiManager.shouldCache {

@@ -8,12 +8,15 @@
 
 import UIKit
 import RealmSwift
-import Realm
 
+//https://realm.io/cn/docs/swift/latest/
 class RealmManager: NSObject {
     
-    lazy var defaultConfiguration: RLMRealmConfiguration = {
-        let config: RLMRealmConfiguration = RLMRealmConfiguration.default()
+    static let shared = RealmManager()
+    fileprivate override init() {}
+    
+    fileprivate lazy var defaultConfiguration: Realm.Configuration = {
+        var config = Realm.Configuration.defaultConfiguration
         // 使用默认的目录，但是使用用户名来替换默认的文件名
         let pathComponent = "ZhiHuDaily"
         config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent(pathComponent).appendingPathExtension("realm")
@@ -21,9 +24,9 @@ class RealmManager: NSObject {
     }()
     
     ///创建当前线程环境下的RLMRealm对象
-    var defaultRealm: RLMRealm? {
+    var defaultRealm: Realm? {
         do {
-            let realm = try RLMRealm(configuration: self.defaultConfiguration)
+            let realm = try Realm(configuration: defaultConfiguration)
             return realm
         } catch {
             return nil
@@ -31,6 +34,6 @@ class RealmManager: NSObject {
         
     }
     
-    var defaultQueue = DispatchQueue(label: "com.midea.realm", attributes: DispatchQueue.Attributes.concurrent)
+    var defaultQueue = DispatchQueue(label: "com.ZhiHuDaily.realm", attributes: .concurrent)
 
 }
