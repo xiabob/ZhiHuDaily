@@ -10,8 +10,20 @@ import UIKit
 
 class ScrollNumberLabel: UIView {
     private(set) var number: UInt = 0
-    var font = UIFont.systemFont(ofSize: 14)
-    var textColor = UIColor.black
+    var font = UIFont.systemFont(ofSize: 14) {
+        didSet {
+            for label in numberLabels {
+                label.font = font
+            }
+        }
+    }
+    var textColor = UIColor.black {
+        didSet {
+            for label in numberLabels {
+                label.textColor = textColor
+            }
+        }
+    }
     
     fileprivate var numbers: [UInt] = []
     fileprivate var numberLabels: [CyclicNumberLabel] = []

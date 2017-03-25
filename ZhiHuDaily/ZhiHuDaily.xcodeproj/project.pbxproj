@@ -52,6 +52,11 @@
 		7447DB0C1E7BB4F2009C2349 /* LaunchBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB0B1E7BB4F2009C2349 /* LaunchBottomView.swift */; };
 		7447DB0E1E7BC9B8009C2349 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB0D1E7BC9B8009C2349 /* DataUtils.swift */; };
 		7447DB111E7BDC3D009C2349 /* MainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */; };
+		74507E101E860A3100D6606C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0E1E860A3100D6606C /* RealmSwift.framework */; };
+		74507E111E860A3100D6606C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0E1E860A3100D6606C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74507E121E860A3100D6606C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0F1E860A3100D6606C /* Realm.framework */; };
+		74507E131E860A3100D6606C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0F1E860A3100D6606C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74507E171E860E3E00D6606C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74507E161E860E3E00D6606C /* RealmManager.swift */; };
 		7459EADC1E82395B009B6C78 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADB1E82395B009B6C78 /* ViewUtils.swift */; };
 		7459EADE1E823C64009B6C78 /* NewsDetailWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */; };
 		7459EAE01E825152009B6C78 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADF1E825152009B6C78 /* Editor.swift */; };
@@ -67,6 +72,21 @@
 		74D0C5A71E83B87300E0F2CA /* NewsDetailBottomToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D0C5A61E83B87300E0F2CA /* NewsDetailBottomToolBar.swift */; };
 		A83FDFEA71F232F59A8A11C0 /* Pods_ZhiHuDaily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F102AAB7850854AB052F403 /* Pods_ZhiHuDaily.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		74507E141E860A3200D6606C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				74507E131E860A3100D6606C /* Realm.framework in Embed Frameworks */,
+				74507E111E860A3100D6606C /* RealmSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		150D8701880D2B14E83D1E13 /* Pods-ZhiHuDaily.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZhiHuDaily.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZhiHuDaily/Pods-ZhiHuDaily.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +153,9 @@
 		7447DB0B1E7BB4F2009C2349 /* LaunchBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchBottomView.swift; sourceTree = "<group>"; };
 		7447DB0D1E7BC9B8009C2349 /* DataUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
 		7447DB101E7BDC3D009C2349 /* MainNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationBar.swift; sourceTree = "<group>"; };
+		74507E0E1E860A3100D6606C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		74507E0F1E860A3100D6606C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		74507E161E860E3E00D6606C /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		7459EADB1E82395B009B6C78 /* ViewUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsDetailWebVC.swift; sourceTree = "<group>"; };
 		7459EADF1E825152009B6C78 /* Editor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
@@ -154,6 +177,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74507E121E860A3100D6606C /* Realm.framework in Frameworks */,
+				74507E101E860A3100D6606C /* RealmSwift.framework in Frameworks */,
 				A83FDFEA71F232F59A8A11C0 /* Pods_ZhiHuDaily.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,6 +221,8 @@
 		485F014AE9465B436B5A3A4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				74507E0E1E860A3100D6606C /* RealmSwift.framework */,
+				74507E0F1E860A3100D6606C /* Realm.framework */,
 				1F102AAB7850854AB052F403 /* Pods_ZhiHuDaily.framework */,
 			);
 			name = Frameworks;
@@ -315,6 +342,7 @@
 		7447DAC21E7B8760009C2349 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				747B3A7E1E85135E00745449 /* Realm */,
 				7447DAC31E7B876E009C2349 /* XBAPIBaseManager */,
 				7447DB061E7B9265009C2349 /* LaunchDS.swift */,
 				16E2B51F1E7D0D84001CE63B /* GetLatestNews.swift */,
@@ -459,6 +487,14 @@
 			path = NewsDetail;
 			sourceTree = "<group>";
 		};
+		747B3A7E1E85135E00745449 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				74507E161E860E3E00D6606C /* RealmManager.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -472,6 +508,8 @@
 				7447DA711E7B7754009C2349 /* Resources */,
 				0977F8901946C08F0C59FB07 /* [CP] Embed Pods Frameworks */,
 				8E5F7360BAA94B0055B9E120 /* [CP] Copy Pods Resources */,
+				74507E141E860A3200D6606C /* Embed Frameworks */,
+				74507E151E860A7800D6606C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -558,8 +596,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		74507E151E860A7800D6606C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"\n\n";
 		};
 		8E5F7360BAA94B0055B9E120 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -616,6 +667,7 @@
 				7443CC311E83D03000602D80 /* GetNewsExtraInfos.swift in Sources */,
 				7447DACB1E7B876E009C2349 /* XBAPIChain.swift in Sources */,
 				7447DB031E7B8F19009C2349 /* LaunchVC.swift in Sources */,
+				74507E171E860E3E00D6606C /* RealmManager.swift in Sources */,
 				16E2B52B1E7D13F1001CE63B /* XBCycleView.swift in Sources */,
 				7447DAF01E7B878A009C2349 /* UIButton+XBPosition.m in Sources */,
 				743D423B1E8363A300D55695 /* NewsDetailLoadHeader.swift in Sources */,
@@ -764,6 +816,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WPR8JVVW9L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ZhiHuDaily/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -780,6 +836,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WPR8JVVW9L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ZhiHuDaily/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
