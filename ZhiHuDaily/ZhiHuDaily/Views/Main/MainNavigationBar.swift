@@ -68,9 +68,11 @@ class MainNavigationBar: UIView {
     }
     
     override func layoutSubviews() {
-        menuButton.snp.makeConstraints { (make) in
-            make.left.equalTo(12)
+        let leftPadding: CGFloat = (100 - (menuButton.currentImage?.size.width ?? 19))*0.5 - 12
+        menuButton.snp.remakeConstraints { (make) in
+            make.left.equalTo(-leftPadding)
             make.centerY.equalTo(self)
+            make.width.equalTo(100)
         }
         
         titleLabel.snp.makeConstraints { (make) in

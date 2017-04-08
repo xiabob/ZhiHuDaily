@@ -45,7 +45,7 @@ class LaunchVC: UIViewController {
         }) {
             dispatchMain(after: 1, completeBlock: {
                 appDelegate.window?.rootViewController = appDelegate.drawerController
-                appDelegate.drawerController?.view.addSubview(self.view)
+                appDelegate.drawerController.view.addSubview(self.view)
                 UIView.animate(withDuration: 0.25, animations: { 
                     self.view.alpha = 0
                 }, completion: { (finished) in

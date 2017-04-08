@@ -11,6 +11,7 @@
 
 
 #import "UIView+XBAdd.h"
+#import "UIButton+XBPosition.h"
 #import "GCDMulticastDelegate.h"
 #import "XBWeakProxy.h"
 #import "XBJsonKit.h"

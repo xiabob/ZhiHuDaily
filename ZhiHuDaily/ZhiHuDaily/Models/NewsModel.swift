@@ -90,16 +90,19 @@ class NewsModel: NSObject {
         css = news.css
         
         recommenders.removeAll()
-        for recommender in JSON(news.recommenders).arrayValue {
-            let editor = EditorModel()
-            editor.avatar = recommender["avatar"].stringValue
-            recommenders.append(editor)
+        if let array = (news.recommenders as NSString).jsonValue() as? [String] {
+            for recommender in array {
+                let editor = EditorModel()
+                editor.avatar = recommender
+                recommenders.append(editor)
+            }
         }
         
-        let themeJson = JSON(news.theme)
-        theme.themeID = themeJson["id"].intValue
-        theme.name = themeJson["name"].stringValue
-        theme.thumbnail = themeJson["thumbnail"].stringValue
+        if let themeDic = (news.theme as NSString).jsonValue() as? Dictionary<String, Any> {
+            theme.themeID = themeDic["id"] as? Int ?? 0
+            theme.name = themeDic["name"] as? String ?? ""
+            theme.thumbnail = themeDic["thumbnail"] as? String ?? ""
+        }
     }
     
     ///根据existModel来更新NewsModel的内容

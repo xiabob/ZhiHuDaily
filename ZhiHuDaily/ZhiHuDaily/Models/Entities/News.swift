@@ -75,7 +75,8 @@ extension News {
     }
     
     class func fetchNews(from realm: Realm, withDate date: String) -> [News] {
-        return getEntities(from: realm, withPredicate: NSPredicate(format: "date = %@", date))
+        return getEntities(from: realm, withPredicate: NSPredicate(format: "date = %@", date), using: [SortDescriptor(keyPath: "newsID", ascending: false)])
+//        return getEntities(from: realm, withPredicate: NSPredicate(format: "date = %@", date))
     }
 }
 
@@ -181,9 +182,14 @@ extension News {
             return value.stringValue
         }).first ?? ""
         
-        recommenders = detailNewsDic["recommenders"].stringValue
+        let recommenderArray = detailNewsDic["recommenders"].arrayValue.map({ (value) -> String in
+            return value["avatar"].stringValue
+        })
+        recommenders = NSArray(array: recommenderArray).jsonRepresentation() ?? ""
         
-        theme = detailNewsDic["section"].stringValue
+        if let themeDic = detailNewsDic["section"].dictionaryObject {
+            theme = NSDictionary(dictionary: themeDic).jsonRepresentation() ?? ""
+        }
         
         type = detailNewsDic["type"].intValue
         

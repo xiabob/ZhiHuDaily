@@ -354,6 +354,13 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
 
 extension MainVC: MainNavigationBarDelegate {
     func navigationBar(_ navigationBar: MainNavigationBar, didClickMenuButton button: UIButton) {
+        if appDelegate.drawerController.openSide == .none {
+            //当前状态是未展开左侧视图，点击展示左侧视图
+            appDelegate.drawerController.open(.left, animated: true, completion: nil)
+        } else {
+            //
+            appDelegate.drawerController.closeDrawer(animated: true, completion: nil)
+        }
     }
     
     func navigationBar(_ navigationBar: MainNavigationBar, beginRefresh refreshHeader: CycleRefreshHeaderView) {

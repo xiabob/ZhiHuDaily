@@ -13,14 +13,14 @@ import MMDrawerController
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var drawerController: MMDrawerController?
+    var drawerController: MMDrawerController!
 
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        configDrawerController()
+        return true
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        let centerVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MainNavigationController")
-        let leftVC = MenuVC()
-        drawerController = MMDrawerController(center: centerVC, leftDrawerViewController: leftVC)
         
         return true
     }
@@ -50,3 +50,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+//MARK: - config MMDrawerController
+extension AppDelegate {
+    fileprivate func configDrawerController() {
+        let centerVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MainNavigationController")
+        let leftVC = MenuVC()
+        drawerController = MMDrawerController(center: centerVC, leftDrawerViewController: leftVC)
+        drawerController.maximumLeftDrawerWidth = kScreenWidth * 0.6
+        drawerController.openDrawerGestureModeMask = .custom
+        drawerController.closeDrawerGestureModeMask = .all
+        drawerController.showsShadow = false
+        drawerController.shouldStretchDrawer = false
+        drawerController.setGestureShouldRecognizeTouch { (drawerController, gesture, touch) -> Bool in
+            if let controller = drawerController?.centerViewController as? UINavigationController {
+                if gesture is UIPanGestureRecognizer {
+                    //只针对controller的root控制器的pan手势处理
+                    return controller.viewControllers.count == 1
+                }
+            }
+            
+            return false
+        }
+    }
+}

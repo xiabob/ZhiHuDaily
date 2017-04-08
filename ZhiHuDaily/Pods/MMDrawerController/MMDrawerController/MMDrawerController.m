@@ -311,6 +311,12 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
          animations:^{
              [self setNeedsStatusBarAppearanceUpdateIfSupported];
              [self.centerContainerView setFrame:newFrame];
+             
+             //TODO: 仅仅是针对left side做了处理
+             CGRect newSideFrame = self.leftDrawerViewController.view.frame;
+             newSideFrame.origin.x = -self.maximumLeftDrawerWidth;
+             self.leftDrawerViewController.view.frame = newSideFrame;
+             
              [self updateDrawerVisualStateForDrawerSide:visibleSide percentVisible:0.0];
          }
          completion:^(BOOL finished) {
@@ -348,9 +354,18 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
         if(sideDrawerViewController){
             CGRect newFrame;
             CGRect oldFrame = self.centerContainerView.frame;
+            CGRect newSideFrame;
             if(drawerSide == MMDrawerSideLeft){
                 newFrame = self.centerContainerView.frame;
                 newFrame.origin.x = self.maximumLeftDrawerWidth;
+                
+                //TODO: 仅仅是针对left side做了处理
+                CGRect tmpRect = sideDrawerViewController.view.frame;
+                newSideFrame = tmpRect;
+                newSideFrame.origin.x = 0;
+                tmpRect.origin.x = oldFrame.origin.x - self.maximumLeftDrawerWidth;
+                sideDrawerViewController.view.frame = tmpRect;
+                
             }
             else {
                 newFrame = self.centerContainerView.frame;
@@ -367,6 +382,10 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
              animations:^{
                  [self setNeedsStatusBarAppearanceUpdateIfSupported];
                  [self.centerContainerView setFrame:newFrame];
+                 
+                 //TODO: 仅仅是针对left side做了处理
+                 sideDrawerViewController.view.frame = newSideFrame;
+                 
                  [self updateDrawerVisualStateForDrawerSide:drawerSide percentVisible:1.0];
              }
              completion:^(BOOL finished) {
@@ -1091,6 +1110,12 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             newFrame.origin.x = floor(newFrame.origin.x);
             newFrame.origin.y = floor(newFrame.origin.y);
             self.centerContainerView.frame = newFrame;
+            
+            //TODO: 仅仅是针对left side做了处理
+            CGRect newSideFrame = self.leftDrawerViewController.view.frame;
+            newSideFrame.origin.x = newFrame.origin.x - self.maximumLeftDrawerWidth;
+            self.leftDrawerViewController.view.frame = newSideFrame;
+            
             
             break;
         }
