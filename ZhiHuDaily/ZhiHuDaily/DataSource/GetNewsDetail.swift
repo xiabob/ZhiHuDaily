@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class GetNewsDetail: XBAPIBaseManager, ManagerProtocol {
+class GetNewsDetail: XBAPIBaseManager, ManagerProtocol, XBAPILocalCache {
     var newsID = 0
     var model: NewsModel?
     
@@ -17,7 +17,12 @@ class GetNewsDetail: XBAPIBaseManager, ManagerProtocol {
         return "/news/\(newsID)"
     }
     
-    var useCustomLoadFromLocal: Bool {return true}
+    var shouldCache: Bool {return true}
+    
+    func getDataFromLocal(from key: String) -> Data? {
+        customLoadFromLocal()
+        return nil
+    }
     
     func customLoadFromLocal() {
         guard let realm = RealmManager.shared.defaultRealm else {return}

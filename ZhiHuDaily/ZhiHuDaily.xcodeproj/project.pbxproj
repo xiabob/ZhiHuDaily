@@ -17,6 +17,10 @@
 		16E2B52D1E7D13F1001CE63B /* XBImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2B5281E7D13F1001CE63B /* XBImageDownloader.swift */; };
 		16EFFB9E1E7E340D00457A12 /* CycleRefreshHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFFB9D1E7E340D00457A12 /* CycleRefreshHeaderView.swift */; };
 		16EFFBA11E7E3DDF00457A12 /* UIView+XBAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 16EFFBA01E7E3DDF00457A12 /* UIView+XBAdd.m */; };
+		74180C081E9B1ED5008BED9B /* MenuFullCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74180C071E9B1ED5008BED9B /* MenuFullCell.swift */; };
+		74180C0A1E9B20FA008BED9B /* MenuNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74180C091E9B20FA008BED9B /* MenuNormalCell.swift */; };
+		74180C0C1E9B26FE008BED9B /* XBAPILocalCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74180C0B1E9B26FE008BED9B /* XBAPILocalCache.swift */; };
+		74180C0E1E9B2A83008BED9B /* GetThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74180C0D1E9B2A83008BED9B /* GetThemes.swift */; };
 		743D423B1E8363A300D55695 /* NewsDetailLoadHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D423A1E8363A300D55695 /* NewsDetailLoadHeader.swift */; };
 		7443CC2F1E83CE9F00602D80 /* NewsExtraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7443CC2E1E83CE9F00602D80 /* NewsExtraModel.swift */; };
 		7443CC311E83D03000602D80 /* GetNewsExtraInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7443CC301E83D03000602D80 /* GetNewsExtraInfos.swift */; };
@@ -109,6 +113,10 @@
 		16EFFB9F1E7E3DDF00457A12 /* UIView+XBAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XBAdd.h"; sourceTree = "<group>"; };
 		16EFFBA01E7E3DDF00457A12 /* UIView+XBAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XBAdd.m"; sourceTree = "<group>"; };
 		1F102AAB7850854AB052F403 /* Pods_ZhiHuDaily.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZhiHuDaily.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		74180C071E9B1ED5008BED9B /* MenuFullCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuFullCell.swift; sourceTree = "<group>"; };
+		74180C091E9B20FA008BED9B /* MenuNormalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuNormalCell.swift; sourceTree = "<group>"; };
+		74180C0B1E9B26FE008BED9B /* XBAPILocalCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBAPILocalCache.swift; sourceTree = "<group>"; };
+		74180C0D1E9B2A83008BED9B /* GetThemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetThemes.swift; sourceTree = "<group>"; };
 		743D423A1E8363A300D55695 /* NewsDetailLoadHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsDetailLoadHeader.swift; sourceTree = "<group>"; };
 		7443CC2E1E83CE9F00602D80 /* NewsExtraModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsExtraModel.swift; sourceTree = "<group>"; };
 		7443CC301E83D03000602D80 /* GetNewsExtraInfos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNewsExtraInfos.swift; sourceTree = "<group>"; };
@@ -361,6 +369,7 @@
 				7459EAE91E826264009B6C78 /* GetNewsDetail.swift */,
 				7443CC301E83D03000602D80 /* GetNewsExtraInfos.swift */,
 				747B3A7C1E85061800745449 /* VoteNews.swift */,
+				74180C0D1E9B2A83008BED9B /* GetThemes.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -372,6 +381,7 @@
 				7447DAC51E7B876E009C2349 /* ManagerProtocol.swift */,
 				7447DAC61E7B876E009C2349 /* XBAPIBaseManager.swift */,
 				7447DAC71E7B876E009C2349 /* XBAPIChain.swift */,
+				74180C0B1E9B26FE008BED9B /* XBAPILocalCache.swift */,
 			);
 			path = XBAPIBaseManager;
 			sourceTree = "<group>";
@@ -494,6 +504,8 @@
 				744A65741E98DDD300A802A6 /* MenuTopBarView.swift */,
 				744A65761E98E66500A802A6 /* MenuBottomBarView.swift */,
 				744A65781E98E99500A802A6 /* MenuCell.swift */,
+				74180C071E9B1ED5008BED9B /* MenuFullCell.swift */,
+				74180C091E9B20FA008BED9B /* MenuNormalCell.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -665,6 +677,7 @@
 				744A65751E98DDD300A802A6 /* MenuTopBarView.swift in Sources */,
 				7447DB111E7BDC3D009C2349 /* MainNavigationBar.swift in Sources */,
 				74D0C5A51E83AD2B00E0F2CA /* NewsDetailLoadFooter.swift in Sources */,
+				74180C0E1E9B2A83008BED9B /* GetThemes.swift in Sources */,
 				7447DAD01E7B877F009C2349 /* WebColorDefine.swift in Sources */,
 				7447DAF41E7B878A009C2349 /* GCDMulticastDelegate.m in Sources */,
 				7447DAF11E7B878A009C2349 /* UIImage+ImageEffects.m in Sources */,
@@ -678,6 +691,7 @@
 				7447DA941E7B863F009C2349 /* XBCornerRadius.swift in Sources */,
 				7447DA8E1E7B83AE009C2349 /* CommonDefine.swift in Sources */,
 				7447DB0E1E7BC9B8009C2349 /* DataUtils.swift in Sources */,
+				74180C081E9B1ED5008BED9B /* MenuFullCell.swift in Sources */,
 				7447DACA1E7B876E009C2349 /* XBAPIBaseManager.swift in Sources */,
 				7447DAEF1E7B878A009C2349 /* NSURL+ParameterParser.m in Sources */,
 				7459EADE1E823C64009B6C78 /* NewsDetailWebVC.swift in Sources */,
@@ -691,6 +705,7 @@
 				7447DB051E7B8F28009C2349 /* MenuVC.swift in Sources */,
 				7443CC311E83D03000602D80 /* GetNewsExtraInfos.swift in Sources */,
 				744A65731E98C29000A802A6 /* MenuLoginView.swift in Sources */,
+				74180C0C1E9B26FE008BED9B /* XBAPILocalCache.swift in Sources */,
 				7447DACB1E7B876E009C2349 /* XBAPIChain.swift in Sources */,
 				7447DB031E7B8F19009C2349 /* LaunchVC.swift in Sources */,
 				74507E191E8613FF00D6606C /* Realm+Extensions.swift in Sources */,
@@ -710,6 +725,7 @@
 				7459EAE21E825417009B6C78 /* Theme.swift in Sources */,
 				7459EAE81E825DA7009B6C78 /* ThemeModel.swift in Sources */,
 				7443CC331E83E8EB00602D80 /* ScrollNumberLabel.swift in Sources */,
+				74180C0A1E9B20FA008BED9B /* MenuNormalCell.swift in Sources */,
 				7447DAEE1E7B878A009C2349 /* NSNull+Safe.m in Sources */,
 				7447DAF51E7B878A009C2349 /* XBFileHash.m in Sources */,
 				7447DB0C1E7BB4F2009C2349 /* LaunchBottomView.swift in Sources */,

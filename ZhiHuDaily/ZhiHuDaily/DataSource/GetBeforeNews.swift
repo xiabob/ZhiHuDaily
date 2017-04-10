@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import SwiftDate
 
-class GetBeforeNews: XBAPIBaseManager, ManagerProtocol {
+class GetBeforeNews: XBAPIBaseManager, ManagerProtocol, XBAPILocalCache {
     var normalNewsModel: [NewsModel] = []
     var beforeDate = ""
     var currentDate = ""
@@ -19,7 +19,7 @@ class GetBeforeNews: XBAPIBaseManager, ManagerProtocol {
         return "/news/before/" + beforeDate
     }
     
-    var useCustomLoadFromLocal: Bool {return true}
+    var shouldCache: Bool {return true}
     
     func customLoadFromLocal() {
         guard let realm = RealmManager.shared.defaultRealm else {return}
@@ -35,6 +35,11 @@ class GetBeforeNews: XBAPIBaseManager, ManagerProtocol {
         normalNewsModel = normalNews.map({ (news) -> NewsModel in
             return NewsModel(from: news)
         })
+    }
+    
+    func getDataFromLocal(from key: String) -> Data? {
+        customLoadFromLocal()
+        return nil
     }
     
     func parseResponseData(_ data: AnyObject) {

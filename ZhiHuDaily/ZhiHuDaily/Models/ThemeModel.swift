@@ -24,6 +24,11 @@ class ThemeModel: NSObject {
     ///颜色，作用未知
     var themeColor = 0
     
+    ///是否订阅关注了该主题
+    var isSubscribed = false
+    
+    var isSelected = false
+    
     override init() {
         super.init()
     }
@@ -39,5 +44,14 @@ class ThemeModel: NSObject {
         thumbnail = theme.thumbnail
         themeDescription = theme.themeDescription
         themeColor = theme.themeColor
+        isSubscribed = theme.isSubscribed
+    }
+    
+    class func mainModel() -> ThemeModel {
+        let model = ThemeModel()
+        model.name = "首页"
+        model.isSubscribed = true
+        model.isSelected = true
+        return model
     }
 }

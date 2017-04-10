@@ -68,8 +68,6 @@ public protocol XBAPIManagerCallBackDelegate: NSObjectProtocol {
 
 public typealias CompletionHandler = (_ manager: XBAPIBaseManager) -> Void
 
-private var kXBLocalUserDefaultsName = "com.xiabob.apiManager.localCache"
-private var kXBDefaultMaxLocalDataCount = 500
 
 //MARK: - XBAPIBaseManager
 open class XBAPIBaseManager: NSObject {
@@ -87,25 +85,18 @@ open class XBAPIBaseManager: NSObject {
     }
     
     
-    fileprivate weak var apiManager: ManagerProtocol? //遵循ManagerProtocol的子类
+    fileprivate weak var apiManager: ManagerProtocol! //遵循ManagerProtocol的子类
+    fileprivate weak var cacheManager: XBAPILocalCache! //遵循XBAPILocalCache的对象
     fileprivate lazy var manager: SessionManager = { //Manager对象实例，执行具体的网络请求工作
         //https://objccn.io/issue-5-4/
         let manager: SessionManager = SessionManager.default
-        let _ = manager.session.configuration.httpAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Accept")
-        let _ = manager.session.configuration.httpAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Content-Type")
         manager.session.configuration.timeoutIntervalForRequest = self.timeout
         return manager
     }()
+    fileprivate var lock = NSLock()
     fileprivate var taskTable = Dictionary<String, URLSessionTask>() //请求表
     fileprivate var currentRequest: Request? //当前请求
     fileprivate var completionHandler: CompletionHandler? //请求结束回调closure对象
-    fileprivate lazy var userDefaults: UserDefaults? = { //用于缓存到本地
-        let userDefaults = UserDefaults(suiteName: kXBLocalUserDefaultsName)
-        if userDefaults?.dictionaryRepresentation().keys.count > kXBDefaultMaxLocalDataCount {
-            userDefaults?.removePersistentDomain(forName: kXBLocalUserDefaultsName)
-        }
-        return userDefaults
-    }()
     
     fileprivate var parseQueue = DispatchQueue(label: "com.xiabob.apiManager.parseData", attributes: DispatchQueue.Attributes.concurrent)
     
@@ -114,7 +105,13 @@ open class XBAPIBaseManager: NSObject {
         super.init()
         
         if self is ManagerProtocol {
-            self.apiManager = self as? ManagerProtocol
+            self.apiManager = self as! ManagerProtocol
+            if self is XBAPILocalCache {
+                self.cacheManager = self as! XBAPILocalCache
+            } else {
+                self.cacheManager = XBAPIDefaultLocalCache.shared
+            }
+            
         } else {
             fatalError("child class must confirm ManagerProtocol!")
         }
@@ -132,9 +129,7 @@ open class XBAPIBaseManager: NSObject {
     //MARK: - load data
     
     open func loadData() {
-        if let apiManager = apiManager {
-            requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
-        }
+        requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
         executeHttpRequest()
     }
     
@@ -144,26 +139,9 @@ open class XBAPIBaseManager: NSObject {
     }
     
     open func loadDataFromLocal() {
-        guard let apiManager = apiManager else {return}
-        if apiManager.useCustomLoadFromLocal {
-            parseQueue.async {
-                apiManager.customLoadFromLocal()
-                DispatchQueue.main.async {
-                    if self.errorCode.code == .success {
-                        self.callOnManagerCallApiSuccess()
-                    } else {
-                        self.callOnManagerCallApiFailed()
-                    }
-                }
-            }
-            
-            return
-        }
-        
         requestUrlString = apiManager.baseUrl + apiManager.apiVersion + apiManager.path
-        
         if apiManager.shouldCache {
-            guard let data = getDataFromLocal() else {return callOnManagerCallApiSuccess()} //只是没有数据
+            guard let data = getDataFromLocal() else {return callOnManagerCallApiSuccess()} //只是没有数据，或者数据处理无法在handleRespnseData中进行
             handleRespnseData(data)
         } else {
             errorCode.code = .loadLocalError
@@ -179,22 +157,25 @@ open class XBAPIBaseManager: NSObject {
     //MARK: - cancle operation
     
     open func cancleRequests() {
+        lock.lock()
         for request in taskTable.values {
             request.cancel()
         }
         taskTable.removeAll()
+        lock.unlock()
     }
     
     open func cancleCurrentRequest() {
+        lock.lock()
         if let currentRequest = currentRequest  {
             currentRequest.cancel()
             taskTable.removeValue(forKey: String(describing: currentRequest.task?.taskIdentifier))
         }
+        lock.unlock()
     }
     
     //MARK: - private method
     fileprivate func executeHttpRequest() {
-        guard let apiManager = apiManager else {return}
         //dataSource中设置参数其优先级更高
         let parameters = dataSource?.parametersForApi(self) ?? apiManager.parameters
         //判断设置的参数是否是有效地，没有dataSource或者没设置isValidParameters方法，默认都是有效地参数
@@ -206,37 +187,39 @@ open class XBAPIBaseManager: NSObject {
         let method = getMethod(apiManager.requestType)
         
         currentRequest = manager.request(requestUrlString,
-                        method: method,
-                        parameters: parameters,
-                        encoding: URLEncoding.default,
-                        headers: nil).responseData(completionHandler: { (response: DataResponse<Data>) in
-            self.taskTable.removeValue(forKey: String(describing: self.currentRequest?.task?.taskIdentifier))
-            
-            if let data = response.result.value {
-                if apiManager.shouldCache {self.saveDataToLocal(data)}
-                self.handleRespnseData(data)
-            } else {
-                var thisError: NSError?
-                if let error = response.result.error {
-                    thisError = error as NSError
-                    debugPrint(error)
-                }
-                self.handleError(thisError)
-            }
-        })
+                                         method: method,
+                                         parameters: parameters,
+                                         encoding: URLEncoding.default,
+                                         headers: nil).responseData(completionHandler: { (response: DataResponse<Data>) in
+                                            self.lock.lock()
+                                            self.taskTable.removeValue(forKey: String(describing: self.currentRequest?.task?.taskIdentifier))
+                                            self.lock.unlock()
+                                            
+                                            if let data = response.result.value {
+                                                if self.apiManager.shouldCache {self.saveDataToLocal(data)}
+                                                self.handleRespnseData(data)
+                                            } else {
+                                                var thisError: NSError?
+                                                if let error = response.result.error {
+                                                    thisError = error as NSError
+                                                    debugPrint(error)
+                                                }
+                                                self.handleError(thisError)
+                                            }
+                                         })
         
+        lock.lock()
         if let task = currentRequest?.task {
             taskTable.updateValue(task, forKey: String(describing: currentRequest?.task?.taskIdentifier))
         }
+        lock.unlock()
     }
     
     fileprivate func handleRespnseData(_ data: Data) {
-        guard let apiManager = apiManager else {return}
-        
         rawResponseString = String(data: data, encoding: String.Encoding.utf8)
         
-        var result: AnyObject = data as AnyObject
-        if apiManager.isJsonData {
+        var result = data as AnyObject
+        if JSONSerialization.isValidJSONObject(data) {
             do {
                 result = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
             } catch {
@@ -246,7 +229,7 @@ open class XBAPIBaseManager: NSObject {
         
         parseQueue.async {
             //子线程中解析
-            apiManager.parseResponseData(result)
+            self.apiManager.parseResponseData(result)
             DispatchQueue.main.async(execute: { //解析完成，回到主线程
                 self.onCompleteParseData()
             })
@@ -288,16 +271,15 @@ open class XBAPIBaseManager: NSObject {
     //MARK: - local cache
     
     fileprivate func saveDataToLocal(_ data: Data) {
-        userDefaults?.set(data, forKey: requestUrlString)
-        userDefaults?.synchronize()
+        cacheManager.saveDataToLocal(for: requestUrlString, data: data)
     }
     
     fileprivate func getDataFromLocal() -> Data? {
-        return userDefaults?.object(forKey: requestUrlString) as? Data
+        return cacheManager.getDataFromLocal(from: requestUrlString)
     }
     
     open func deleteLocalCache() {
-        userDefaults?.removePersistentDomain(forName: kXBLocalUserDefaultsName)
+        cacheManager.clearLocalCache()
     }
     
     //MARK:- 接口解析结束回调
@@ -343,3 +325,4 @@ open class XBAPIBaseManager: NSObject {
         }
     }
 }
+

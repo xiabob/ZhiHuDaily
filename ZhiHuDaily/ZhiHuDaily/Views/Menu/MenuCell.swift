@@ -10,8 +10,30 @@ import UIKit
 
 class MenuCell: UITableViewCell {
     
+    lazy var iconView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = kMenuGrayWhiteTextColor
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    
+    lazy var flagView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        return view
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -22,10 +44,9 @@ class MenuCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    
+    func configViews() {
+        selectionStyle = .none
+        backgroundColor = kMenuBackgroundColor
     }
-
 }

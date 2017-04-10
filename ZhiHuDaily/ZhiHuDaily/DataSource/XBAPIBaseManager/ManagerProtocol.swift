@@ -23,12 +23,8 @@ public protocol ManagerProtocol: NSObjectProtocol {
     var parameters: [String: AnyObject]? {get}
     /// 接口请求的类型，GET、POST等
     var requestType: RequestType {get}
-    /// 接口返回的是否是json数据，默认情况下是true
-    var isJsonData: Bool {get}
     /// 是否将接口返回的数据缓存到本地，默认是false，不缓存
     var shouldCache: Bool {get}
-    /// 是否使用自定义的逻辑来加载本地数据，默认是false。loadDataFromLocal方法默认是加载缓存在本地的接口数据。如果useCustomLoadFromLocal为true，loadDataFromLocal方法使用customLoadFromLocal的逻辑来加载本地数据
-    var useCustomLoadFromLocal: Bool {get}
     
     /**
      具体的解析操作是放在这里
@@ -37,7 +33,6 @@ public protocol ManagerProtocol: NSObjectProtocol {
      */
     func parseResponseData(_ data: AnyObject)
     
-    func customLoadFromLocal()
 }
 
 //默认实现
@@ -46,13 +41,10 @@ public extension ManagerProtocol {
     var apiVersion: String {return "4"} //api版本
     var parameters: [String: AnyObject]? {return nil} //参数可有可无
     var requestType: RequestType {return .get} //默认是GET请求方式
-    var isJsonData: Bool {return true} //默认是json数据
     var shouldCache: Bool {return false}
-    var useCustomLoadFromLocal: Bool {return false}
     
     func parseResponseData(_ data: AnyObject) {
 //        debugPrint("subclass not implement parseResponseData method, you should do this at other place") 
     } //甚至解析操作都可以延后至其他地方（比如vc中）
-    
-    func customLoadFromLocal() {}
+
 }
