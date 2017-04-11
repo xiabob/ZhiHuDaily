@@ -8,6 +8,8 @@
 
 import UIKit
 import RealmSwift
+import Realm
+import SwiftyJSON
 
 ///编辑，一般都是新闻的推荐者
 class Editor: Object, RLMObjectHelperProtocol {
@@ -27,6 +29,18 @@ class Editor: Object, RLMObjectHelperProtocol {
     dynamic var bio = ""
     ///知乎用户主页url
     dynamic var zhihuUrl = ""
+    
+    required init() {
+        super.init()
+    }
+    
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        super.init(realm: realm, schema: schema)
+    }
+    
+    required init(value: Any, schema: RLMSchema) {
+        super.init(value: value, schema: schema)
+    }
 }
 
 
@@ -35,4 +49,26 @@ extension Editor {
     override class func primaryKey() -> String? {
         return "editorID"
     }
+}
+
+
+extension Editor {
+    convenience init(from editorDic: JSON) {
+        self.init()
+        editorID = editorDic["id"].intValue
+    }
+    
+    
+    func update(from editorDic: JSON) {
+//        url: "http://www.zhihu.com/people/wezeit",
+//        bio: "微在 Wezeit 主编",
+//        id: 70,
+//        avatar: "http://pic4.zhimg.com/068311926_m.jpg",
+//        name: "益康糯米"
+        zhihuUrl = editorDic["url"].stringValue
+        bio = editorDic["bio"].stringValue
+        avatar = editorDic["avatar"].stringValue
+        name = editorDic["name"].stringValue
+    }
+    
 }

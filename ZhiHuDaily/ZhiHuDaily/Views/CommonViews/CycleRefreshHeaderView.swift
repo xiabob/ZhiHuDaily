@@ -20,7 +20,10 @@ class CycleRefreshHeaderView: UIView {
     private(set) var isAnimationing = false
     weak var scrollView: UIScrollView? {
         didSet {
-            removeObserver()
+            if oldValue != nil {
+                removeObserver()
+            }
+            
             if scrollView != nil {
                 addObserver()
             }
@@ -90,9 +93,8 @@ class CycleRefreshHeaderView: UIView {
         scrollView?.addObserver(self, forKeyPath: kContentOffsetKeyPath, options: .new, context: nil)
     }
     
-    fileprivate func removeObserver() {
-        //不使用scrollView，因为在deinit阶段，scrollView为nil
-        superview?.removeObserver(self, forKeyPath: kContentOffsetKeyPath)
+    func removeObserver() {
+        scrollView?.removeObserver(self, forKeyPath: kContentOffsetKeyPath)
     }
     
     

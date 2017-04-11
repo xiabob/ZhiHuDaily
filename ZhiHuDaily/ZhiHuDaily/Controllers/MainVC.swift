@@ -84,6 +84,10 @@ class MainVC: UIViewController {
         super.viewDidDisappear(animated)
         bannerView.isAutoCycle = false
     }
+    
+    deinit {
+        barView.removeFromSuperview()
+    }
 
     //MARK: - config views
     
@@ -380,9 +384,10 @@ fileprivate let kBarScrollLength: CGFloat = 130
 extension MainVC: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
+        var offsetY = scrollView.contentOffset.y
         if offsetY <= -kScrollViewMaxOffset {
             scrollView.contentOffset = CGPoint(x: 0, y: -kScrollViewMaxOffset)
+            offsetY = -kScrollViewMaxOffset
         }
         
         //轮播banner，如果是添加到view上，那么bannerView.y = -kBannerOffsetHeight，因为tableview是scrollview，会改变bannerView的相对位置，所以需要加上一个相对偏移offsetY

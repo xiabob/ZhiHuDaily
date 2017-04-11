@@ -25,17 +25,19 @@ class MenuNormalCell: MenuCell {
         }
         
         flagView.snp.makeConstraints { (make) in
-            make.right.equalTo(-30)
+            make.right.equalTo(0)
             make.centerY.equalTo(titleLabel)
+            make.width.equalTo(80)
         }
     }
     
     func refreshViews(with model: ThemeModel) {
+        themeModel = model
         titleLabel.text = model.name
         if model.isSubscribed {
-            flagView.image = #imageLiteral(resourceName: "Menu_Enter")
+            flagView.setImage(#imageLiteral(resourceName: "Menu_Enter"), for: .normal)
         } else {
-            flagView.image = #imageLiteral(resourceName: "Dark_Menu_Follow")
+            flagView.setImage(#imageLiteral(resourceName: "Dark_Menu_Follow"), for: .normal)
         }
         
         if model.isSelected {

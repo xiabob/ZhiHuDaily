@@ -144,7 +144,11 @@ class NewsDetailWebVC: UIViewController {
     fileprivate func configViews() {
         view.addSubview(webView)
         view.addSubview(bottomToolBar)
-        webView.scrollView.addSubview(topBarView)
+        if newsModel.detailImageUrl.isEmpty {
+            loadHeader.resetArrowImageViewToGray()
+        } else {
+            webView.scrollView.addSubview(topBarView)
+        }
         webView.scrollView.addSubview(loadHeader)
         webView.scrollView.addSubview(loadFooter)
     }
@@ -165,7 +169,6 @@ class NewsDetailWebVC: UIViewController {
             let htmlString = "<html><head><link href=\(wself.newsModel.css) rel='stylesheet' type='text/css' /></head><body>\(wself.newsModel.body)</body></html>"
             wself.webView.loadHTMLString(htmlString, baseURL: nil)
             wself.topBarView.refreshViews(with: wself.newsModel)
-            
             wself.loadDetailDataOnline()
         }
     }
@@ -177,6 +180,11 @@ class NewsDetailWebVC: UIViewController {
             wself.newsModel = wself.getNewsDetailDS.model ?? wself.newsModel
             let htmlString = "<html><head><link href=\(wself.newsModel.css) rel='stylesheet' type='text/css' /></head><body>\(wself.newsModel.body)</body></html>"
             wself.webView.loadHTMLString(htmlString, baseURL: nil)
+            if wself.newsModel.detailImageUrl.isEmpty {
+                wself.topBarView.removeFromSuperview()
+            } else {
+                wself.webView.scrollView.insertSubview(wself.topBarView, belowSubview: wself.loadHeader)
+            }
             wself.topBarView.refreshViews(with: wself.newsModel)
             wself.dataSource?.newsDetail(webVC: wself, newsHasReaded: wself.newsID)
         }

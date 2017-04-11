@@ -1,27 +1,24 @@
 //
-//  MainNavigationBar.swift
+//  ThemeNavigationBar.swift
 //  ZhiHuDaily
 //
-//  Created by xiabob on 17/3/17.
+//  Created by xiabob on 17/4/11.
 //  Copyright © 2017年 xiabob. All rights reserved.
 //
 
 import UIKit
-import SnapKit
 
-protocol MainNavigationBarDelegate: NSObjectProtocol {
-    func navigationBar(_ navigationBar: MainNavigationBar, didClickMenuButton button: UIButton);
-    func navigationBar(_ navigationBar: MainNavigationBar, beginRefresh refreshHeader: CycleRefreshHeaderView);
+protocol ThemeNavigationControllerDelegate: NSObjectProtocol {
+    func navigationBar(_ navigationBar: ThemeNavigationBar, beginRefresh refreshHeader: CycleRefreshHeaderView);
 }
 
-
-class MainNavigationBar: UIView {
+class ThemeNavigationBar: UIView {
     
-    fileprivate lazy var menuButton: UIButton = {
+    fileprivate lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Home_Icon"), for: .normal)
-        button.setImage(#imageLiteral(resourceName: "Home_Icon"), for: .selected)
-        button.addTarget(self, action: #selector(onMenuButtonClick(sender:)), for: .touchUpInside)
+        button.setImage(#imageLiteral(resourceName: "Field_Back"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Field_Back"), for: .selected)
+//        button.addTarget(self, action: #selector(onMenuButtonClick(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -29,9 +26,17 @@ class MainNavigationBar: UIView {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = UIColor.white
-        label.text = "今日热闻"
+        label.text = ""
         label.sizeToFit()
         return label
+    }()
+    
+    fileprivate lazy var rightButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Field_Follow"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Field_Follow"), for: .selected)
+        //        button.addTarget(self, action: #selector(onMenuButtonClick(sender:)), for: .touchUpInside)
+        return button
     }()
     
     fileprivate lazy var cycleRefreshHeader: CycleRefreshHeaderView = {
@@ -43,13 +48,13 @@ class MainNavigationBar: UIView {
         return header
     }()
     
-    weak var delegate: MainNavigationBarDelegate?
+    var delegate: ThemeNavigationControllerDelegate?
     
     //MARK: - init
     
     init(frame: CGRect, scrollView: UIScrollView) {
         super.init(frame: frame)
-        backgroundColor = kMainNavigationBarColor
+        backgroundColor = UIColor.clear
         cycleRefreshHeader.scrollView = scrollView
         
         configViews()
@@ -70,38 +75,37 @@ class MainNavigationBar: UIView {
     //MARK: - config View
     
     fileprivate func configViews() {
-        addSubview(menuButton)
+        addSubview(backButton)
         addSubview(titleLabel)
+        addSubview(rightButton)
         addSubview(cycleRefreshHeader)
     }
     
     override func layoutSubviews() {
-        let leftPadding: CGFloat = (100 - (menuButton.currentImage?.size.width ?? 19))*0.5 - 12
-        menuButton.snp.remakeConstraints { (make) in
-            make.left.equalTo(-leftPadding)
-            make.centerY.equalTo(self)
-            make.width.equalTo(100)
+        backButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self).offset(10)
+            make.left.equalTo(8)
         }
         
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
-            make.centerY.equalTo(menuButton)
+            make.centerY.equalTo(backButton)
+        }
+        
+        rightButton.snp.makeConstraints { (make) in
+            make.right.equalTo(-8)
+            make.centerY.equalTo(backButton)
         }
         
         cycleRefreshHeader.snp.makeConstraints { (make) in
             make.right.equalTo(titleLabel.snp.left).offset(-6)
-            make.centerY.equalTo(menuButton)
+            make.centerY.equalTo(backButton)
             make.size.equalTo(cycleRefreshHeader.xb_size)
         }
     }
     
-    //MARK: - action
-    
-    @objc fileprivate func onMenuButtonClick(sender: UIButton) {
-        delegate?.navigationBar(self, didClickMenuButton: sender)
-    }
-
-    func refreshBar(with title: String) {
+    func refreshViews(with title: String) {
         titleLabel.text = title
     }
+
 }

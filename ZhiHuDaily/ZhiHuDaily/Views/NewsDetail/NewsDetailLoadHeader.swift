@@ -75,6 +75,11 @@ class NewsDetailLoadHeader: UIView {
         }
     }
     
+    func resetArrowImageViewToGray() {
+        arrowImageView.image = #imageLiteral(resourceName: "ZHAnswerViewTopDark")
+        titleLabel.textColor = UIColor.gray
+    }
+    
     //MARK: - add or remove observer
     func addObserver() {
         scrollView?.addObserver(self, forKeyPath: kContentOffsetKeyPath, options: .new, context: nil)

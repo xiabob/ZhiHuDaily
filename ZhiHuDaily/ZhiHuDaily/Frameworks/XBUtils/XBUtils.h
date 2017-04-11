@@ -12,6 +12,7 @@
 
 #import "UIView+XBAdd.h"
 #import "UIButton+XBPosition.h"
+#import "UIImage+ImageEffects.h"
 #import "GCDMulticastDelegate.h"
 #import "XBWeakProxy.h"
 #import "XBJsonKit.h"

@@ -21,6 +21,9 @@ class ThemeModel: NSObject {
     ///主题日报的介绍
     var themeDescription = ""
     
+    ///该主题日报的背景图片（大图）
+    var backgroundImage = ""
+    
     ///颜色，作用未知
     var themeColor = 0
     
@@ -42,6 +45,7 @@ class ThemeModel: NSObject {
         themeID = theme.themeID
         name = theme.name
         thumbnail = theme.thumbnail
+        backgroundImage = theme.backgroundImage
         themeDescription = theme.themeDescription
         themeColor = theme.themeColor
         isSubscribed = theme.isSubscribed

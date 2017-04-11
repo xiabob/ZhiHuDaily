@@ -28,6 +28,9 @@ class Theme: Object, RLMObjectHelperProtocol {
     ///背景缩略图url
     dynamic var thumbnail = ""
     
+    ///该主题日报的背景图片（大图）
+    dynamic var backgroundImage = ""
+    
     ///主题日报的介绍
     dynamic var themeDescription = ""
     
@@ -59,7 +62,7 @@ extension Theme {
 }
 
 
-
+//MARK: - from theme list
 extension Theme {
     convenience init(from themeDic: JSON) {
         self.init()
@@ -80,4 +83,6 @@ extension Theme {
         name = themeDic["name"].stringValue
     }
 }
+
+
 

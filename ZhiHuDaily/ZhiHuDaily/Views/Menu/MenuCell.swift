@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MenuCellDelegate: NSObjectProtocol {
+    func onFlagButtonClicked(in cell: MenuCell, isSubscribed: Bool)
+}
+
 class MenuCell: UITableViewCell {
     
     lazy var iconView: UIImageView = {
@@ -24,12 +28,14 @@ class MenuCell: UITableViewCell {
         return label
     }()
     
-    lazy var flagView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
+    lazy var flagView: UIButton = {
+        let view = UIButton()
+        view.addTarget(self, action: #selector(flagButtonClicked), for: .touchUpInside)
         return view
     }()
+    
+    var themeModel: ThemeModel!
+    weak var delegate: MenuCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,5 +54,9 @@ class MenuCell: UITableViewCell {
     func configViews() {
         selectionStyle = .none
         backgroundColor = kMenuBackgroundColor
+    }
+    
+    func flagButtonClicked() {
+        delegate?.onFlagButtonClicked(in: self, isSubscribed: themeModel.isSubscribed)
     }
 }

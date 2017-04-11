@@ -43,6 +43,41 @@
             </objects>
             <point key="canvasLocation" x="-407" y="101"/>
         </scene>
+        <!--Theme Navigation Controller-->
+        <scene sceneID="y1O-Bx-Z9Q">
+            <objects>
+                <navigationController storyboardIdentifier="ThemeNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D1V-ne-emQ" customClass="ThemeNavigationController" customModule="ZhiHuDaily" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="znJ-IO-p6E">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="iGl-hv-RJt" kind="relationship" relationship="rootViewController" id="WYU-OV-Ivf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Efo-cX-Vny" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-407" y="799"/>
+        </scene>
+        <!--ThemeVC-->
+        <scene sceneID="wZb-5b-Pzh">
+            <objects>
+                <viewController id="iGl-hv-RJt" customClass="ThemeVC" customModule="ZhiHuDaily" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2qP-rC-E0H"/>
+                        <viewControllerLayoutGuide type="bottom" id="PHE-E7-aM9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="89c-I4-QN7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="EB7-Rs-znq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6GX-xS-fwy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="433" y="798"/>
+        </scene>
         <!--MainVC-->
         <scene sceneID="HGw-YF-H4y">
             <objects>

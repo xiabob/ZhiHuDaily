@@ -59,7 +59,6 @@ class MenuVC: UIViewController {
 
         commonInit()
         configViews()
-        loadThemes()
     }
 
     override func viewWillLayoutSubviews() {
@@ -73,6 +72,7 @@ class MenuVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadThemes()
     }
     
     //MARK: - config
@@ -125,10 +125,12 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 0 && indexPath.row == 0{
             let fullCell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(MenuFullCell.self), for: indexPath) as! MenuFullCell
             fullCell.refreshViews(with: #imageLiteral(resourceName: "Menu_Icon_Home"), model: model)
+            fullCell.delegate = self
             cell = fullCell
         } else {
             let normalCell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(MenuNormalCell.self), for: indexPath) as! MenuNormalCell
             normalCell.refreshViews(with: model)
+            normalCell.delegate = self
             cell = normalCell
         }
         
@@ -159,11 +161,54 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //如果点击的是当前显示的视图
+        if themeModels[indexPath.section][indexPath.row].isSelected {
+            appDelegate.drawerController.closeDrawer(animated: true, completion: nil)
+            return;
+        }
+        
         //reset model's isSelected
         for model in themeModels.flatMap({$0}) {
             model.isSelected = false
         }
         themeModels[indexPath.section][indexPath.row].isSelected = true
         tableView.reloadData()
+        
+        var centerVC: UIViewController
+        if indexPath.section == 0 {
+             centerVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MainNavigationController")
+        } else {
+            centerVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ThemeNavigationController")
+            (centerVC as! ThemeNavigationController).themeId = themeModels[indexPath.section][indexPath.row].themeID
+        }
+        appDelegate.drawerController.setCenterView(centerVC, withCloseAnimation: true) { (finished) in
+            
+        }
+        
+    }
+}
+
+
+//MARK: - MenuCellDelegate
+
+extension MenuVC: MenuCellDelegate {
+    func onFlagButtonClicked(in cell: MenuCell, isSubscribed: Bool) {
+        if !isSubscribed {
+            guard let fromIndexPath = menuTableView.indexPath(for: cell), let model = cell.themeModel else {return}
+            model.isSubscribed = true
+            
+            menuTableView.beginUpdates()
+            
+            themeModels[1].remove(at: fromIndexPath.row)
+            menuTableView.deleteRows(at: [fromIndexPath], with: .none)
+            
+            themeModels[0].insert(model, at: 1)
+            let toIndexPath = IndexPath(row: 1, section: 0)
+            menuTableView.insertRows(at: [toIndexPath], with: .top)
+            
+            menuTableView.endUpdates()
+            
+            menuTableView.reloadData()
+        }
     }
 }

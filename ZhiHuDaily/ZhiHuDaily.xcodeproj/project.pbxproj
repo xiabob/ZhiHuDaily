@@ -66,6 +66,10 @@
 		74507E131E860A3100D6606C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74507E0F1E860A3100D6606C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74507E171E860E3E00D6606C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74507E161E860E3E00D6606C /* RealmManager.swift */; };
 		74507E191E8613FF00D6606C /* Realm+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74507E181E8613FF00D6606C /* Realm+Extensions.swift */; };
+		7458EE491E9C7CA700CFC9C3 /* ThemeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458EE481E9C7CA700CFC9C3 /* ThemeVC.swift */; };
+		7458EE4B1E9C7CC300CFC9C3 /* ThemeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458EE4A1E9C7CC300CFC9C3 /* ThemeNavigationController.swift */; };
+		7458EE501E9CAD5100CFC9C3 /* GetThemeContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458EE4F1E9CAD5100CFC9C3 /* GetThemeContent.swift */; };
+		7458EE521E9CB36200CFC9C3 /* ThemeNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458EE511E9CB36200CFC9C3 /* ThemeNavigationBar.swift */; };
 		7459EADC1E82395B009B6C78 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADB1E82395B009B6C78 /* ViewUtils.swift */; };
 		7459EADE1E823C64009B6C78 /* NewsDetailWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */; };
 		7459EAE01E825152009B6C78 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459EADF1E825152009B6C78 /* Editor.swift */; };
@@ -174,6 +178,10 @@
 		74507E0F1E860A3100D6606C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		74507E161E860E3E00D6606C /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		74507E181E8613FF00D6606C /* Realm+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Realm+Extensions.swift"; sourceTree = "<group>"; };
+		7458EE481E9C7CA700CFC9C3 /* ThemeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeVC.swift; sourceTree = "<group>"; };
+		7458EE4A1E9C7CC300CFC9C3 /* ThemeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeNavigationController.swift; sourceTree = "<group>"; };
+		7458EE4F1E9CAD5100CFC9C3 /* GetThemeContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetThemeContent.swift; sourceTree = "<group>"; };
+		7458EE511E9CB36200CFC9C3 /* ThemeNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeNavigationBar.swift; sourceTree = "<group>"; };
 		7459EADB1E82395B009B6C78 /* ViewUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsDetailWebVC.swift; sourceTree = "<group>"; };
 		7459EADF1E825152009B6C78 /* Editor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
@@ -301,6 +309,8 @@
 				7447DB001E7B8E38009C2349 /* MainVC.swift */,
 				7447DB041E7B8F28009C2349 /* MenuVC.swift */,
 				7459EADD1E823C64009B6C78 /* NewsDetailWebVC.swift */,
+				7458EE4A1E9C7CC300CFC9C3 /* ThemeNavigationController.swift */,
+				7458EE481E9C7CA700CFC9C3 /* ThemeVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -341,6 +351,7 @@
 		7447DA8C1E7B798A009C2349 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7458EE4C1E9CACD800CFC9C3 /* Theme */,
 				744A65711E98BC3D00A802A6 /* Menu */,
 				16EFFB9C1E7E307100457A12 /* CommonViews */,
 				7459EAEB1E827696009B6C78 /* NewsDetail */,
@@ -370,6 +381,7 @@
 				7443CC301E83D03000602D80 /* GetNewsExtraInfos.swift */,
 				747B3A7C1E85061800745449 /* VoteNews.swift */,
 				74180C0D1E9B2A83008BED9B /* GetThemes.swift */,
+				7458EE4F1E9CAD5100CFC9C3 /* GetThemeContent.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -508,6 +520,14 @@
 				74180C091E9B20FA008BED9B /* MenuNormalCell.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		7458EE4C1E9CACD800CFC9C3 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				7458EE511E9CB36200CFC9C3 /* ThemeNavigationBar.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		7459EAEB1E827696009B6C78 /* NewsDetail */ = {
@@ -670,6 +690,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16EFFB9E1E7E340D00457A12 /* CycleRefreshHeaderView.swift in Sources */,
+				7458EE4B1E9C7CC300CFC9C3 /* ThemeNavigationController.swift in Sources */,
 				16E2B5201E7D0D84001CE63B /* GetLatestNews.swift in Sources */,
 				16EFFBA11E7E3DDF00457A12 /* UIView+XBAdd.m in Sources */,
 				747B3A7D1E85061800745449 /* VoteNews.swift in Sources */,
@@ -683,6 +704,7 @@
 				7447DAF11E7B878A009C2349 /* UIImage+ImageEffects.m in Sources */,
 				7447DACF1E7B877F009C2349 /* String+WebColor.swift in Sources */,
 				16E2B52D1E7D13F1001CE63B /* XBImageDownloader.swift in Sources */,
+				7458EE521E9CB36200CFC9C3 /* ThemeNavigationBar.swift in Sources */,
 				74D0C5A71E83B87300E0F2CA /* NewsDetailBottomToolBar.swift in Sources */,
 				7443CC2F1E83CE9F00602D80 /* NewsExtraModel.swift in Sources */,
 				7459EAED1E8276C5009B6C78 /* NewsDetailTopBar.swift in Sources */,
@@ -694,6 +716,7 @@
 				74180C081E9B1ED5008BED9B /* MenuFullCell.swift in Sources */,
 				7447DACA1E7B876E009C2349 /* XBAPIBaseManager.swift in Sources */,
 				7447DAEF1E7B878A009C2349 /* NSURL+ParameterParser.m in Sources */,
+				7458EE501E9CAD5100CFC9C3 /* GetThemeContent.swift in Sources */,
 				7459EADE1E823C64009B6C78 /* NewsDetailWebVC.swift in Sources */,
 				7447DAF21E7B878A009C2349 /* NSString+XBAppVersion.m in Sources */,
 				16E2B52C1E7D13F1001CE63B /* XBCycleViewImageModel.swift in Sources */,
@@ -711,6 +734,7 @@
 				74507E191E8613FF00D6606C /* Realm+Extensions.swift in Sources */,
 				74507E171E860E3E00D6606C /* RealmManager.swift in Sources */,
 				16E2B52B1E7D13F1001CE63B /* XBCycleView.swift in Sources */,
+				7458EE491E9C7CA700CFC9C3 /* ThemeVC.swift in Sources */,
 				7447DAF01E7B878A009C2349 /* UIButton+XBPosition.m in Sources */,
 				743D423B1E8363A300D55695 /* NewsDetailLoadHeader.swift in Sources */,
 				16911C291E7C0E2A002F5A69 /* News.swift in Sources */,
