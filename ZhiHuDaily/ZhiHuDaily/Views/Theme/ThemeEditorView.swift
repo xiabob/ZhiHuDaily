@@ -19,7 +19,7 @@ class ThemeEditorView: UIControl {
         return label
     }()
     
-    fileprivate lazy var editorCollectionView: UICollectionView = {
+    fileprivate lazy var editorCollectionView: UICollectionView = { [unowned self] in
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 20, height: 20)
         layout.minimumInteritemSpacing = 4

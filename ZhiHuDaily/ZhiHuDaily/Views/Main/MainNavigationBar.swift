@@ -17,7 +17,7 @@ protocol MainNavigationBarDelegate: NSObjectProtocol {
 
 class MainNavigationBar: UIView {
     
-    fileprivate lazy var menuButton: UIButton = {
+    fileprivate lazy var menuButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Home_Icon"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "Home_Icon"), for: .selected)
@@ -34,7 +34,7 @@ class MainNavigationBar: UIView {
         return label
     }()
     
-    fileprivate lazy var cycleRefreshHeader: CycleRefreshHeaderView = {
+    fileprivate lazy var cycleRefreshHeader: CycleRefreshHeaderView = { [unowned self] in
         let header:CycleRefreshHeaderView = CycleRefreshHeaderView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
         header.refreshBlock = { [weak self] in
             guard let wself = self else {return}

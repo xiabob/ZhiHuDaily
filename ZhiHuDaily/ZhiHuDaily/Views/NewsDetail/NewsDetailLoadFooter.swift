@@ -14,14 +14,7 @@ class NewsDetailLoadFooter: UIView {
     
     var transformChangeOffset: CGFloat = 60
     var frameOffsetLength: CGFloat = 20
-    private(set) weak var scrollView: UIScrollView? {
-        didSet {
-            removeObserver()
-            if scrollView != nil {
-                addObserver()
-            }
-        }
-    }
+    private(set) weak var scrollView: UIScrollView?
     
     var loadComplete: (()->())?
     
@@ -70,7 +63,10 @@ class NewsDetailLoadFooter: UIView {
         //handel UIScrollView
         if newSuperview != nil && !(newSuperview is UIScrollView) { return }
         
-        removeObserver()
+        if superview != nil {
+            removeObserver()
+        }
+        
         if newSuperview != nil {
             scrollView = newSuperview as? UIScrollView
             addObserver()

@@ -33,7 +33,7 @@ class MenuVC: UIViewController {
         return layer
     }()
     
-    fileprivate lazy var menuTableView: UITableView = {
+    fileprivate lazy var menuTableView: UITableView = { [unowned self] in
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.register(MenuFullCell.self, forCellReuseIdentifier: NSStringFromClass(MenuFullCell.self))
         tableView.register(MenuNormalCell.self, forCellReuseIdentifier: NSStringFromClass(MenuNormalCell.self))

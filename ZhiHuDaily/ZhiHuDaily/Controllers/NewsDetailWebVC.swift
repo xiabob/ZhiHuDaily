@@ -56,7 +56,7 @@ class NewsDetailWebVC: UIViewController {
         return view
     }()
     
-    fileprivate lazy var loadFooter: NewsDetailLoadFooter = {
+    fileprivate lazy var loadFooter: NewsDetailLoadFooter = { [unowned self] in
         let rect = CGRect(x: 0, y: 0, width: kScreenWidth, height: 30)
         let view = NewsDetailLoadFooter(frame: rect)
         view.positionFlag = self.newsPosition
@@ -64,7 +64,7 @@ class NewsDetailWebVC: UIViewController {
         return view
     }()
     
-    fileprivate lazy var bottomToolBar: NewsDetailBottomToolBar = {
+    fileprivate lazy var bottomToolBar: NewsDetailBottomToolBar = { [unowned self] in
         let view = NewsDetailBottomToolBar(frame: CGRect(x: 0, y: kScreenHeight-kTabBarHeight, width: kScreenWidth, height: kTabBarHeight))
         view.delegate = self
         return view
@@ -123,11 +123,6 @@ class NewsDetailWebVC: UIViewController {
         loadNewsDetailData()
     }
     
-    deinit {
-        loadHeader.removeObserver()
-        loadFooter.removeObserver()
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
@@ -144,9 +139,7 @@ class NewsDetailWebVC: UIViewController {
     fileprivate func configViews() {
         view.addSubview(webView)
         view.addSubview(bottomToolBar)
-        if newsModel.detailImageUrl.isEmpty {
-            loadHeader.resetArrowImageViewToGray()
-        } else {
+        if !newsModel.detailImageUrl.isEmpty {
             webView.scrollView.addSubview(topBarView)
         }
         webView.scrollView.addSubview(loadHeader)
@@ -193,6 +186,7 @@ class NewsDetailWebVC: UIViewController {
             
             if wself.newsModel.detailImageUrl.isEmpty {
                 wself.topBarView.removeFromSuperview()
+                wself.loadHeader.resetArrowImageViewToGray()
             } else {
                 wself.webView.scrollView.insertSubview(wself.topBarView, belowSubview: wself.loadHeader)
             }

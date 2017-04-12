@@ -13,14 +13,7 @@ class NewsDetailLoadHeader: UIView {
     fileprivate let kContentOffsetKeyPath = "contentOffset"
     
     var transformChangeOffset: CGFloat = 45
-    private(set) weak var scrollView: UIScrollView? {
-        didSet {
-            removeObserver()
-            if scrollView != nil {
-                addObserver()
-            }
-        }
-    }
+    private(set) weak var scrollView: UIScrollView? 
     
     var loadComplete: (()->())?
     
@@ -68,7 +61,10 @@ class NewsDetailLoadHeader: UIView {
         //handel UIScrollView
         if newSuperview != nil && !(newSuperview is UIScrollView) { return }
         
-        removeObserver()
+        if superview != nil {
+            removeObserver()
+        }
+        
         if newSuperview != nil {
             scrollView = newSuperview as? UIScrollView
             addObserver()

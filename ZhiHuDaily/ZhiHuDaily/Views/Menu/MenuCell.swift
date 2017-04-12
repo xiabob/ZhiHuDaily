@@ -28,7 +28,7 @@ class MenuCell: UITableViewCell {
         return label
     }()
     
-    lazy var flagView: UIButton = {
+    lazy var flagView: UIButton = { [unowned self] in
         let view = UIButton()
         view.addTarget(self, action: #selector(flagButtonClicked), for: .touchUpInside)
         return view

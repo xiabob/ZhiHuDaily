@@ -32,7 +32,7 @@ class CycleRefreshHeaderView: UIView {
     fileprivate var beginDate = Date()
 
     
-    fileprivate lazy var backgroundCycleView: UIView = {
+    fileprivate lazy var backgroundCycleView: UIView = { [unowned self] in
         let view = UIView(frame: self.bounds)
         view.backgroundColor = UIColor.clear
         view.layer.borderColor = UIColor.black.withAlphaComponent(0.25).cgColor
@@ -42,7 +42,7 @@ class CycleRefreshHeaderView: UIView {
         return view
     }()
     
-    fileprivate lazy var cycleLayer: CAShapeLayer = {
+    fileprivate lazy var cycleLayer: CAShapeLayer = { [unowned self] in
         let layer = CAShapeLayer()
         let path = UIBezierPath(arcCenter: CGPoint(x: self.xb_width/2, y: self.xb_height/2), radius: self.xb_width/2-0.5, startAngle: CGFloat(M_PI_2), endAngle: CGFloat(M_PI*2 + M_PI_2), clockwise: true)
         layer.path = path.cgPath
@@ -58,7 +58,7 @@ class CycleRefreshHeaderView: UIView {
         return layer
     }()
     
-    fileprivate lazy var indicatorView: UIActivityIndicatorView = {
+    fileprivate lazy var indicatorView: UIActivityIndicatorView = { [unowned self] in
         let view = UIActivityIndicatorView(frame: self.bounds)
         view.activityIndicatorViewStyle = .white
         view.alpha = 0

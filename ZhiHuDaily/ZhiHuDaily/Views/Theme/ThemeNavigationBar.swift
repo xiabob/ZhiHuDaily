@@ -16,7 +16,7 @@ protocol ThemeNavigationControllerDelegate: NSObjectProtocol {
 
 class ThemeNavigationBar: UIView {
     
-    fileprivate lazy var backButton: UIButton = {
+    fileprivate lazy var backButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Field_Back"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "Field_Back"), for: .selected)
@@ -33,7 +33,7 @@ class ThemeNavigationBar: UIView {
         return label
     }()
     
-    fileprivate lazy var rightButton: UIButton = {
+    fileprivate lazy var rightButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Field_Follow"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "Field_Follow"), for: .selected)
@@ -41,7 +41,7 @@ class ThemeNavigationBar: UIView {
         return button
     }()
     
-    fileprivate lazy var cycleRefreshHeader: CycleRefreshHeaderView = {
+    fileprivate lazy var cycleRefreshHeader: CycleRefreshHeaderView = { [unowned self] in
         let header:CycleRefreshHeaderView = CycleRefreshHeaderView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
         header.refreshBlock = { [weak self] in
             guard let wself = self else {return}

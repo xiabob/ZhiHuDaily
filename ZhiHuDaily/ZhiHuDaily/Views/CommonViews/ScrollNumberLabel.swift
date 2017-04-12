@@ -209,7 +209,7 @@ fileprivate class CyclicNumberLabel: UIView {
     fileprivate lazy var topLabel: UILabel = self.createLabel()
     fileprivate lazy var centerLabel: UILabel = self.createLabel()
     fileprivate lazy var bottomLabel: UILabel = self.createLabel()
-    fileprivate lazy var containerView: UIView = {
+    fileprivate lazy var containerView: UIView = { [unowned self] in
         let view = UIView(frame: CGRect(x: 0,
                                         y: -self.xb_height,
                                         width: self.xb_width,

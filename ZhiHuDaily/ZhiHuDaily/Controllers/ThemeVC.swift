@@ -13,21 +13,21 @@ class ThemeVC: UIViewController {
     
     //MARK: - var
     
-    fileprivate lazy var navigationBar: ThemeNavigationBar = {
+    fileprivate lazy var navigationBar: ThemeNavigationBar = { [unowned self] in
         let rect = CGRect(x: 0, y: 0, width: kScreenWidth, height: 64)
         let bar = ThemeNavigationBar(frame: rect, scrollView: self.newsTableView)
         bar.delegate = self
         return bar
     }()
     
-    fileprivate lazy var backgroundImageView: UIImageView = {
+    fileprivate lazy var backgroundImageView: UIImageView = { [unowned self] in
         let view: UIImageView = UIImageView(frame: self.navigationBar.bounds)
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
     }()
     
-    fileprivate lazy var newsTableView: UITableView = {
+    fileprivate lazy var newsTableView: UITableView = { [unowned self] in
         let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight), style: .grouped)
         tableView.register(NewsCell.self, forCellReuseIdentifier: NSStringFromClass(NewsCell.self))
         tableView.delegate = self
@@ -42,7 +42,7 @@ class ThemeVC: UIViewController {
         return tableView
     }()
     
-    fileprivate lazy var editorView: ThemeEditorView = {
+    fileprivate lazy var editorView: ThemeEditorView = { [unowned self] in
         let view = ThemeEditorView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: 40))
         view.addTarget(self, action: #selector(pushEditorsVC), for: .touchUpInside)
         return view

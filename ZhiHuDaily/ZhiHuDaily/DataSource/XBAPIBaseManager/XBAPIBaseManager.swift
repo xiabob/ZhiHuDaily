@@ -190,7 +190,7 @@ open class XBAPIBaseManager: NSObject {
                                          method: method,
                                          parameters: parameters,
                                          encoding: URLEncoding.default,
-                                         headers: nil).responseData(completionHandler: { (response: DataResponse<Data>) in
+                                         headers: nil).responseData(completionHandler: { [unowned self](response: DataResponse<Data>) in
                                             self.lock.lock()
                                             self.taskTable.removeValue(forKey: String(describing: self.currentRequest?.task?.taskIdentifier))
                                             self.lock.unlock()
@@ -227,10 +227,11 @@ open class XBAPIBaseManager: NSObject {
             }
         }
         
-        parseQueue.async {
+        parseQueue.async { [unowned self] in
             //子线程中解析
             self.apiManager.parseResponseData(result)
-            DispatchQueue.main.async(execute: { //解析完成，回到主线程
+            DispatchQueue.main.async(execute: {
+                //解析完成，回到主线程
                 self.onCompleteParseData()
             })
         }

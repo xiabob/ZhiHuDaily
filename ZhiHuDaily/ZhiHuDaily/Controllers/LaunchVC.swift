@@ -25,7 +25,7 @@ class LaunchVC: UIViewController {
     
     fileprivate lazy var launchDS: LaunchDS = {
         let ds = LaunchDS()
-        return ds;
+        return ds
     }()
 
     override func viewDidLoad() {
@@ -68,9 +68,10 @@ class LaunchVC: UIViewController {
                 wself.showDefaultImage()
             }
             
-            wself.launchDS.loadData({ (api) in
+            wself.launchDS.loadData({ [weak wself](api) in
+                guard let wwself = wself else {return}
                 //预先下载图片
-                guard let model = wself.launchDS.model else {return}
+                guard let model = wwself.launchDS.model else {return}
                 guard let imageURL = URL(string: model.url) else {return}
                 YYWebImageManager.shared().requestImage(with: imageURL, options: .allowInvalidSSLCertificates, progress: nil, transform: nil, completion: nil)
             })

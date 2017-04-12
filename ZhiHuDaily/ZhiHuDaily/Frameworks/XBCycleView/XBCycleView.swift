@@ -89,7 +89,7 @@ open class XBCycleView: UIView, UIScrollViewDelegate {
     fileprivate var nextIndex: Int = 0
     
     //subviews
-    fileprivate lazy var scrollView: UIScrollView = {
+    fileprivate lazy var scrollView: UIScrollView = { [unowned self] in
         let rect = CGRect(x: 0, y: 0, width: self.width, height: self.height)
         let view: UIScrollView = UIScrollView(frame: rect)
         view.contentSize = CGSize(width: self.width*3, height: 0)
@@ -106,15 +106,15 @@ open class XBCycleView: UIView, UIScrollViewDelegate {
         
         return view
     }()
-    fileprivate lazy var currentImageView: XBCyclePageView = {
+    fileprivate lazy var currentImageView: XBCyclePageView = { [unowned self] in
         let imageView = XBCyclePageView(frame: CGRect(x: self.width, y: 0, width: self.width, height: self.height))
         return imageView
     }()
-    fileprivate lazy var nextImageView: XBCyclePageView = {
+    fileprivate lazy var nextImageView: XBCyclePageView = { [unowned self] in
         let imageView = XBCyclePageView(frame: CGRect(x: self.width*2, y: 0, width: self.width, height: self.height))
         return imageView
     }()
-    fileprivate lazy var pageControl: UIPageControl = {
+    fileprivate lazy var pageControl: UIPageControl = { [unowned self] in
         let pageControl: UIPageControl = UIPageControl()
         pageControl.currentPage = self.currentIndex
         pageControl.hidesForSinglePage = true

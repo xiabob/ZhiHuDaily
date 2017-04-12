@@ -16,28 +16,28 @@ class MainVC: UIViewController {
         return view
     }()
     
-    fileprivate lazy var barView: MainNavigationBar = {
+    fileprivate lazy var barView: MainNavigationBar = { [unowned self] in
         let view = MainNavigationBar(frame: CGRect(x: 0, y: kStatusBarHeight, width: kScreenWidth, height: 40), scrollView: self.newsTableView)
         view.backgroundColor = kMainNavigationBarColor.withAlphaComponent(0)
         view.delegate = self
         return view
     }()
     
-    fileprivate lazy var bannerView: XBCycleView = {
+    fileprivate lazy var bannerView: XBCycleView = { [unowned self] in
         let view = XBCycleView(frame: CGRect(x: 0, y: -kBannerOffsetHeight, width: kScreenWidth, height: 200+kBannerOffsetHeight), imageArray: [])
         view.autoScrollTimeInterval = 4
         view.delegate = self
         return view
     }()
     
-    fileprivate lazy var refreshFooter: MJRefreshAutoNormalFooter = {
+    fileprivate lazy var refreshFooter: MJRefreshAutoNormalFooter = { [unowned self] in
         let footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadBeforeNews))
         footer?.isRefreshingTitleHidden = true
         footer?.setTitle("", for: .idle)
         return footer!
     }()
     
-    fileprivate lazy var newsTableView: UITableView = {
+    fileprivate lazy var newsTableView: UITableView = { [unowned self] in
         let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: kStatusBarHeight, width: kScreenWidth, height: kScreenHeight-kStatusBarHeight), style: .plain)
         tableView.register(NewsCell.self, forCellReuseIdentifier: NSStringFromClass(NewsCell.self))
         tableView.delegate = self

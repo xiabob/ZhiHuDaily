@@ -43,7 +43,7 @@ class GetLatestNews: XBAPIBaseManager, ManagerProtocol, XBAPILocalCache {
         var normalNews: [News] = []
         let realm = RealmManager.shared.defaultRealm
         //write transaction 不能嵌套，会阻塞当前线程
-        try? realm?.write({
+        try? realm?.write({ [unowned self] in
             for newsDic in normalStories {
                 let newsID = newsDic["id"].intValue
                 let existNews = realm?.object(ofType: News.self, forPrimaryKey: newsID)
@@ -56,7 +56,7 @@ class GetLatestNews: XBAPIBaseManager, ManagerProtocol, XBAPILocalCache {
                     normalNews.append(news)
                 }
             }
-            normalNewsModel = normalNews.map({ (news) -> NewsModel in
+            self.normalNewsModel = normalNews.map({ (news) -> NewsModel in
                 return NewsModel(from: news)
             })
             
@@ -74,7 +74,7 @@ class GetLatestNews: XBAPIBaseManager, ManagerProtocol, XBAPILocalCache {
                     topNews.append(news)
                 }
             }
-            topBannerNewsModel = topNews.map({ (news) -> NewsModel in
+            self.topBannerNewsModel = topNews.map({ (news) -> NewsModel in
                 return NewsModel(from: news)
             })
         })

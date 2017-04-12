@@ -18,7 +18,7 @@ protocol NewsDetailBottomToolBarDelegate: NSObjectProtocol {
 
 class NewsDetailBottomToolBar: UIView {
     
-    fileprivate lazy var backButton: UIButton = {
+    fileprivate lazy var backButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Arrow"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Arrow_Highlight"), for: .highlighted)
@@ -26,7 +26,7 @@ class NewsDetailBottomToolBar: UIView {
         return button
     }()
     
-    fileprivate lazy var nextButton: UIButton = {
+    fileprivate lazy var nextButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Next"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Next_Highlight"), for: .highlighted)
@@ -35,7 +35,7 @@ class NewsDetailBottomToolBar: UIView {
         return button
     }()
     
-    fileprivate lazy var voteButton: UIButton = {
+    fileprivate lazy var voteButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Vote"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Vote"), for: .highlighted)
@@ -52,7 +52,7 @@ class NewsDetailBottomToolBar: UIView {
         return label
     }()
     
-    fileprivate lazy var shareButton: UIButton = {
+    fileprivate lazy var shareButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Share"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Share_Highlight"), for: .highlighted)
@@ -60,7 +60,7 @@ class NewsDetailBottomToolBar: UIView {
         return button
     }()
     
-    fileprivate lazy var commentButton: UIButton = {
+    fileprivate lazy var commentButton: UIButton = { [unowned self] in
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Comment"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "News_Navigation_Comment_Highlight"), for: .highlighted)
@@ -83,7 +83,7 @@ class NewsDetailBottomToolBar: UIView {
         return view
     }()
     
-    fileprivate lazy var voteNumberLabel: ScrollNumberLabel = {
+    fileprivate lazy var voteNumberLabel: ScrollNumberLabel = { [unowned self] in
         let rect = CGRect(x: 0, y: 0, width: 40, height: 20)
         let label = ScrollNumberLabel(frame: rect, originNumber: 0)
         label.center = CGPoint(x: self.voteNumberView.xb_width/2, y: self.voteNumberView.xb_height/2 - 3)
