@@ -77,7 +77,7 @@ class NewsModel: NSObject {
         type     = news.type
         rawDate  = news.date
         date     = getProcessedDate(dateString: news.date)
-        isMultipic = news.isMultipic
+        isMultipic = news.isMultipic && !imageUrl.isEmpty
         isRead = news.isRead
         showType = NewsShowType(rawValue: news.showType) ?? .normal
         

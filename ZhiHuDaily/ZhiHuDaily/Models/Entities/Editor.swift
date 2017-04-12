@@ -56,6 +56,7 @@ extension Editor {
     convenience init(from editorDic: JSON) {
         self.init()
         editorID = editorDic["id"].intValue
+        update(from: editorDic)
     }
     
     

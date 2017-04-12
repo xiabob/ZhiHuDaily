@@ -9,7 +9,9 @@
 import UIKit
 
 protocol ThemeNavigationControllerDelegate: NSObjectProtocol {
-    func navigationBar(_ navigationBar: ThemeNavigationBar, beginRefresh refreshHeader: CycleRefreshHeaderView);
+    func navigationBar(_ navigationBar: ThemeNavigationBar, beginRefresh refreshHeader: CycleRefreshHeaderView)
+    func navigationBar(_ navigationBar: ThemeNavigationBar, didClickBackButton button: UIButton)
+    func navigationBar(_ navigationBar: ThemeNavigationBar, didClickRightButton button: UIButton)
 }
 
 class ThemeNavigationBar: UIView {
@@ -18,7 +20,7 @@ class ThemeNavigationBar: UIView {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Field_Back"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "Field_Back"), for: .selected)
-//        button.addTarget(self, action: #selector(onMenuButtonClick(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(clickBackButton), for: .touchUpInside)
         return button
     }()
     
@@ -35,7 +37,7 @@ class ThemeNavigationBar: UIView {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Field_Follow"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "Field_Follow"), for: .selected)
-        //        button.addTarget(self, action: #selector(onMenuButtonClick(sender:)), for: .touchUpInside)
+                button.addTarget(self, action: #selector(clickRightButton), for: .touchUpInside)
         return button
     }()
     
@@ -106,6 +108,16 @@ class ThemeNavigationBar: UIView {
     
     func refreshViews(with title: String) {
         titleLabel.text = title
+    }
+    
+    //MARK: - button action
+    
+    @objc fileprivate func clickBackButton() {
+        delegate?.navigationBar(self, didClickBackButton: backButton)
+    }
+    
+    @objc fileprivate func clickRightButton() {
+        delegate?.navigationBar(self, didClickRightButton: rightButton)
     }
 
 }

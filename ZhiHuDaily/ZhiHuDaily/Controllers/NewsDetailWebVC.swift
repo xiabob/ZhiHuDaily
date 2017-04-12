@@ -178,14 +178,26 @@ class NewsDetailWebVC: UIViewController {
         getNewsDetailDS.loadData { [weak self](api) in
             guard let wself = self else {return}
             wself.newsModel = wself.getNewsDetailDS.model ?? wself.newsModel
-            let htmlString = "<html><head><link href=\(wself.newsModel.css) rel='stylesheet' type='text/css' /></head><body>\(wself.newsModel.body)</body></html>"
-            wself.webView.loadHTMLString(htmlString, baseURL: nil)
+            
+            if wself.newsModel.body.isEmpty {
+                //特殊情况，没有body部分，直接加载shareUrl对应的内容
+                if let url = URL(string: wself.newsModel.shareUrl) {
+                    let request = URLRequest(url: url)
+                    wself.webView.loadRequest(request)
+                }
+                
+            } else {
+                let htmlString = "<html><head><link href=\(wself.newsModel.css) rel='stylesheet' type='text/css' /></head><body>\(wself.newsModel.body)</body></html>"
+                wself.webView.loadHTMLString(htmlString, baseURL: nil)
+            }
+            
             if wself.newsModel.detailImageUrl.isEmpty {
                 wself.topBarView.removeFromSuperview()
             } else {
                 wself.webView.scrollView.insertSubview(wself.topBarView, belowSubview: wself.loadHeader)
             }
             wself.topBarView.refreshViews(with: wself.newsModel)
+            
             wself.dataSource?.newsDetail(webVC: wself, newsHasReaded: wself.newsID)
         }
     }

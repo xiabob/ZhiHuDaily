@@ -28,7 +28,7 @@ class ThemeVC: UIViewController {
     }()
     
     fileprivate lazy var newsTableView: UITableView = {
-        let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight), style: .plain)
+        let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight), style: .grouped)
         tableView.register(NewsCell.self, forCellReuseIdentifier: NSStringFromClass(NewsCell.self))
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,6 +40,12 @@ class ThemeVC: UIViewController {
         tableView.backgroundColor = UIColor.clear
         tableView.clipsToBounds = false
         return tableView
+    }()
+    
+    fileprivate lazy var editorView: ThemeEditorView = {
+        let view = ThemeEditorView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: 40))
+        view.addTarget(self, action: #selector(pushEditorsVC), for: .touchUpInside)
+        return view
     }()
     
     fileprivate lazy var getThemeContentDS: GetThemeContent = {
@@ -129,6 +135,27 @@ extension ThemeVC: UITableViewDelegate, UITableViewDataSource {
         return newsModels[indexPath.row].newsCellHeight
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if editorModels.count > 0 {
+            return editorView.xb_height
+        }
+        
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if editorModels.count > 0 {
+            editorView.refreshViews(with: editorModels)
+            return editorView
+        }
+        
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = newsModels[indexPath.row]
         pushDetailWebVC(model: model)
@@ -138,6 +165,10 @@ extension ThemeVC: UITableViewDelegate, UITableViewDataSource {
         let detailVC = NewsDetailWebVC(from: model)
         detailVC.dataSource = self
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    @objc fileprivate func pushEditorsVC() {
+        print("pushEditorsVC")
     }
 }
 
@@ -249,5 +280,19 @@ extension ThemeVC: ThemeNavigationControllerDelegate {
         loadThemeContent { 
             refreshHeader.endRefreshing()
         }
+    }
+    
+    func navigationBar(_ navigationBar: ThemeNavigationBar, didClickBackButton button: UIButton) {
+        if appDelegate.drawerController.openSide == .none {
+            //当前状态是未展开左侧视图，点击展示左侧视图
+            appDelegate.drawerController.open(.left, animated: true, completion: nil)
+        } else {
+            //
+            appDelegate.drawerController.closeDrawer(animated: true, completion: nil)
+        }
+    }
+    
+    func navigationBar(_ navigationBar: ThemeNavigationBar, didClickRightButton button: UIButton) {
+        
     }
 }

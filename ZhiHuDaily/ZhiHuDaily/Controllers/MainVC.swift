@@ -418,9 +418,17 @@ extension MainVC: UIScrollViewDelegate {
             }
         }
         
+        //提前预加载数据
         let cellHeight = normalNews.first?.first?.newsCellHeight ?? 90
         if offsetY >= scrollView.contentSize.height - scrollView.xb_height - cellHeight * 10 {
             refreshFooter.beginRefreshing()
+        }
+        
+        //超出一定范围，不滚动banner
+        if offsetY >= bannerView.origineHeight * 2 {
+            bannerView.isAutoCycle = false
+        } else {
+            bannerView.isAutoCycle = true
         }
     }
     

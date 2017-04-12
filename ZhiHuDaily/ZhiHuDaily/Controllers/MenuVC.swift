@@ -174,6 +174,7 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
         themeModels[indexPath.section][indexPath.row].isSelected = true
         tableView.reloadData()
         
+        let backgroundImage = appDelegate.drawerController.centerViewController.view.snapshotImage()
         var centerVC: UIViewController
         if indexPath.section == 0 {
              centerVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MainNavigationController")
@@ -181,8 +182,17 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
             centerVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ThemeNavigationController")
             (centerVC as! ThemeNavigationController).themeId = themeModels[indexPath.section][indexPath.row].themeID
         }
+        
+        //添加过渡动画
+        let backgroundImageView = UIImageView(frame: centerVC.view.bounds)
+        backgroundImageView.image = backgroundImage
+        centerVC.view.addSubview(backgroundImageView)
         appDelegate.drawerController.setCenterView(centerVC, withCloseAnimation: true) { (finished) in
-            
+            UIView.animate(withDuration: 0.25, animations: { 
+                backgroundImageView.alpha = 0
+            }, completion: { (finished) in
+                backgroundImageView.removeFromSuperview()
+            })
         }
         
     }
